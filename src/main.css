@@ -1,0 +1,247 @@
+*{
+    margin:0;
+    padding:0;
+}
+
+.App{ 
+    position: relative;
+    width:100%;
+    height:auto;
+}
+
+.home{ 
+    position: relative;
+    margin-top:10vh;
+    width:100%; 
+    background-color:#F2F5F8;
+    color:black;
+}
+
+h1{
+    font-family: 'Poppins', sans-serif;
+    
+
+}
+h2{
+    font-family: 'Poppins', sans-serif;
+}
+
+p{
+    font-family: 'Poppins', sans-serif;
+
+}
+li{
+    font-family: 'Poppins', sans-serif;
+}
+
+
+button{
+    font-family:'Poppins', sans-serif;
+    cursor: pointer;
+}
+
+.home_left{
+    height:90vh;
+    width:50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    padding-left:4.5rem;
+    row-gap: 1.5rem;
+    
+}
+
+
+.namer{
+    width:80%;
+    font-size:4.5rem;
+}
+
+.description{
+    font-size: 1rem;
+    font-weight: 400;
+    width:85%;
+}
+
+.buttons{
+    display:flex;
+    column-gap: 1rem;;
+}
+
+.btn_left{ 
+    background-color: black;
+    border:none;
+    color:white;
+    padding:15px 20px;
+}
+
+.btn_right{ 
+    background-color: white ;
+    border:1.5px solid black;
+    color:black;
+    padding:15px 15px;
+}
+
+.login_main{
+   
+    width:100%;
+    height:100vh;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    background-color:#202227;
+    flex-direction: column;
+}
+
+.signup_form{
+    margin-top:20vh;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width:50vw;
+    height: 90vh;
+    row-gap: 1rem;
+    flex-direction: column;
+    background-color: #202227;
+}
+.name_fields{ 
+    display: flex;
+    justify-content:space-between;
+    
+    width:80%;
+    
+}
+
+.name_field{
+    width: 45%;
+    flex-shrink: 0;
+    height:2rem;
+    border-radius: 6px;
+    border:1px solid rgba(0, 0, 0, 0.11);
+    outline: none;
+    padding:5px;
+    background-color: #282A2F;
+    color:#8692A6;
+    filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.11));
+}
+.credentials{
+    width: 80%;
+    height:2.4rem;
+    flex-shrink: 0;
+    border-radius: 6px;
+    border:1px solid rgba(0, 0, 0, 0.11);
+    outline: none;
+    background-color: #282A2F;
+    color:#8692A6;
+    text-indent: 10px;
+
+}
+
+.credentials_password{
+    width: 100%;
+    height:2.4rem;
+    flex-shrink: 0;
+    border-radius: 6px;
+    border:1px solid rgba(0, 0, 0, 0.11);
+    outline: none;
+    background-color: #282A2F;
+    color:#8692A6;
+    text-indent: 10px;
+
+}
+
+.signup_button{ 
+    width: 80%;
+    height: 64px;
+    border-radius: 6px;
+    border:none;
+    background: #5871EB;
+    color: #FFF;
+    text-align: center;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    font-family: 'Poppins' ,sans-serif;
+
+}
+
+.password{ 
+    position: relative;
+    width:80%;
+
+}
+
+.show_password{ 
+    position: absolute;
+    top:21%;
+    right:2%;
+    cursor:pointer;
+}
+
+.greeting{ 
+    position: absolute;
+   
+    font-family: Poppins;
+    top:20%;
+    left:30%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.greeting_title{ 
+    
+   
+    color: #FFF;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+   
+}
+.greeting_description{ 
+    color: #8692A6;
+    font-family: Poppins;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px; 
+}
+
+.redirect{ 
+    display:flex;
+    color:#8692A6;
+    column-gap: 0.5rem;
+    
+}
+
+.redirect_text{ 
+    font-family: Poppins;
+    
+
+}
+
+.redirect_link{ 
+    font-family: Poppins;
+    color: #5871EB;
+    cursor: pointer;
+   
+
+}
+
+.login_logo{ 
+    font-family: Poppins;
+    position:absolute;
+    color: #FFF;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    left:5%;
+    top:2%;
+    cursor: pointer;
+
+}
