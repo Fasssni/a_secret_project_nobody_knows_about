@@ -1,11 +1,11 @@
 import { useState, ChangeEvent, useEffect} from "react"
 import { useNavigate } from "react-router-dom"
 import "../main.css"
-import {  signup, signupProps } from "../store/api"
+import { signupProps, useStoreContext } from "../store/api"
 
 type PropertyProps="name"|"email"|"surname"|"password"
 export const Signup=()=>{
-
+    const {signup}=useStoreContext()
     const [showPassword, setShowPassword]=useState(false)
     const navigate=useNavigate()
 

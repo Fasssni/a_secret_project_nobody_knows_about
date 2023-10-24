@@ -1,12 +1,12 @@
 
 import {useState, ChangeEvent, MouseEvent} from "react"
 import { useNavigate } from "react-router-dom"
-import { LogingProps, login } from "../store/api"
+import { LogingProps,  useStoreContext } from "../store/api"
 
 type LoginPropertyProps="email"|"password"
 
 export const Login=()=>{ 
-
+    const {login}=useStoreContext()
     const [showPassword, setShowPassword]=useState(false)
     
     const [creds, setCreds]=useState<LogingProps>({email:"",password:""})
@@ -20,10 +20,14 @@ export const Login=()=>{
 
     const loginHandler= async (e:MouseEvent<HTMLButtonElement>)=>{ 
          e.preventDefault()
-         const res= await login(creds)
-         console.log(res)
+         
+         await login(creds)
+         
 
          setCreds({...creds, email:"",password:""})
+
+         navigate("/")
+         
 
 
     }
