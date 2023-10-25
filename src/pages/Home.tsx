@@ -1,8 +1,25 @@
 import "../main.css"
+import { useStoreContext } from "../store/api"
+import { useUIContext } from "../store/uiContext"
+import {useState, useEffect} from "react"
 
 export const Home=()=>{
 
-    return <div className="home">
+    const {isAuth, user}=useStoreContext()
+    
+
+    return(
+        
+    <div className="home">
+    {isAuth
+        ?
+        <div className="userAccount">
+            <h3>{user?.name}</h3>
+            <h3>{user?.surname}</h3>
+            <p>{user?.email}</p>
+
+        </div>
+        : <>
                 <div className="home_left">
                     <h1 className="namer">
                      Empower Your Business with AI-driven CRM
@@ -14,7 +31,10 @@ export const Home=()=>{
                     </div>
                 </div>
                 <div className="home_right">
-
-                </div>
-           </div>
+              </div>
+              </>
+          
+        }
+     </div>
+    )
 }

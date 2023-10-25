@@ -25,7 +25,8 @@ type StoreContextProps={
     isAuth:boolean,
     user: UserProps|undefined,
     isLoading:boolean,
-
+    getMessages:()=> void,
+    messages:MessageProps[]|undefined,
 
 }
 
@@ -42,6 +43,11 @@ type ChildreType={
 
 }
 
+type MessageProps={ 
+    user_id:number,
+    text:string,
+}
+
 
 const StoreContext=createContext({} as StoreContextProps)
 export const useStoreContext=()=>useContext(StoreContext)
@@ -50,10 +56,12 @@ export const useStoreContext=()=>useContext(StoreContext)
 export const StoreContextProvider=({children}:ChildreType)=>{ 
      
 const path="http://localhost:5000/apiv"
+const msgURL="http://localhost:5000/tg"
 
 const [isAuth, setIsAuth]=useState<boolean>(false)
 const [isLoading, setIsLoading]=useState<boolean>(false)
 const [user, setUser]=useState<UserProps>()
+const [messages, setMessages]=useState<MessageProps[]>()
 
 const signup= async ({user}:UserType)=>{ 
 try{ 
@@ -66,12 +74,15 @@ try{
 
  const login=async({email, password}:LogingProps)=>{
     try{
+        setIsLoading(true)
         const response =await axios.post(`${path}/login`, {email, password}, {withCredentials:true})
         localStorage.setItem("accesToken",response.data.accessToken.accessToken)
         setUser(response.data.user)
         setIsAuth(true)
     }catch(err){ 
          console.log(err)
+    }finally{
+        setIsLoading(false)
     }
 
 }
@@ -97,15 +108,38 @@ try{
 
 const logout= async ()=>{ 
     try{ 
-       const res= await axios.get(`${path}/logout`, {withCredentials:true})
+        setIsLoading(true)
+       const res= await axios.post(`${path}/logout`, {withCredentials:true})
        console.log(res)
     }catch(e){
+        console.log(e)
+    }finally{
+        setIsLoading(false)
+    }
+
+}
+
+const sendMessage=async(message:string)=>{ 
+    try{ 
+        const res=await axios.post(`${msgURL}/sendmessage`, message)
+        
+    }catch(e){ 
+        console.log(e)
+    }
+}
+
+const getMessages=async()=>{ 
+
+    try{
+        const data=await axios.get(`${msgURL}/getmgs`)
+        setMessages(data.data)
+    }catch(e){ 
         console.log(e)
     }
 
 }
 
-useEffect(()=>{console.log(isAuth)},[isAuth])
+useEffect(()=>{console.log(messages)},[messages])
 
 
 
@@ -118,7 +152,9 @@ useEffect(()=>{console.log(isAuth)},[isAuth])
                             isAuth,
                             user,
                             isLoading,
-                            logout
+                            logout,
+                            getMessages,
+                            messages
 
                           }}
             >

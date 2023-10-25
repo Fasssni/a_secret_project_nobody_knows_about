@@ -6,7 +6,7 @@ import { LogingProps,  useStoreContext } from "../store/api"
 type LoginPropertyProps="email"|"password"
 
 export const Login=()=>{ 
-    const {login}=useStoreContext()
+    const {login, checkAuth}=useStoreContext()
     const [showPassword, setShowPassword]=useState(false)
     
     const [creds, setCreds]=useState<LogingProps>({email:"",password:""})
@@ -25,7 +25,7 @@ export const Login=()=>{
          
 
          setCreds({...creds, email:"",password:""})
-
+         
          navigate("/")
          
 

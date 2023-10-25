@@ -1,0 +1,11 @@
+
+.nav_burg_main{ 
+
+    cursor: e-resize;
+    position: fixed;
+    width:100%; 
+    z-index:99999;
+    height:100vh;
+    background-color: rgb(179, 174, 174);
+
+}

@@ -1,0 +1,18 @@
+.my_account{
+    
+    background-color: transparent ;
+    margin-right:2rem;
+    width:15%;
+    height:90%;
+    display:flex;
+    justify-content: start;
+    align-items: center;
+    font-size:1rem;
+    column-gap: 1rem;
+    cursor: pointer;
+}
+.icon{ 
+    margin-left:1rem;
+    width:3.6rem;
+    border-radius:50%;
+}

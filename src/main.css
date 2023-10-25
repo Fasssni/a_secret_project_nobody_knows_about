@@ -13,7 +13,7 @@
     position: relative;
     margin-top:10vh;
     width:100%; 
-    background-color:#F2F5F8;
+    background-color:#a3a7aa;
     color:black;
 }
 
@@ -245,3 +245,29 @@ button{
     cursor: pointer;
 
 }
+.userAccount{ 
+     height:100vh;
+     display:flex;
+     justify-content: center;
+     align-items:center;
+     flex-direction: column;
+}
+
+.userTab{ 
+    height:100vh;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    flex-direction: column;
+    position: relative;
+    margin-top:10vh;
+    background-color:#a3a7aa;
+    color:black;
+}
+
+.inbox_main{
+    width:100%;
+    min-height: 100vh;
+    margin-top: 10vh;
+}
+
