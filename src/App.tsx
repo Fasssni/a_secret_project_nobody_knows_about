@@ -9,6 +9,7 @@ import {LoadingAnimation} from './components/LoadingAnimation/LoadingAnimation'
 import { BurgerMenu } from './components/BurgerMenu/BurgerMenu'
 import { useUIContext } from './store/uiContext'
 import { Inbox } from './pages/Inbox'
+import { Integrate } from './pages/Integrate'
 
 
 
@@ -42,9 +43,16 @@ function App() {
                   <Route path="/" element={<Home/>}/>
                   <Route path="/signup"element={<Signup/>}/>
                   <Route path="/login" element={<Login/>}/>
+                  
+                 
+                  {isAuth&&(
+                  <>
+                    <Route path="/inbox" element={<Inbox/>}/>
+                    <Route path="/integrate" element={<Integrate/>}/>
+                  </>
+                  )}
+
                   <Route path="*" element={<Home/>}/>
-                  <Route path="/test" element={<LoadingAnimation/>}/>
-                  <Route path="/inbox" element={<Inbox/>}/>
               </Routes>
             </div>
             {isLoading&&<LoadingAnimation/>}

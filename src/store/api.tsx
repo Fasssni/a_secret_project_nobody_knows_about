@@ -27,6 +27,9 @@ type StoreContextProps={
     isLoading:boolean,
     getMessages:()=> void,
     messages:MessageProps[]|undefined,
+    sendMessage:(message:string, id:number)=>Promise<void>,
+    getConversations:()=>void,
+    conversations:ConversationProps[]|undefined,
 
 }
 
@@ -46,8 +49,17 @@ type ChildreType={
 type MessageProps={ 
     user_id:number,
     text:string,
+    name:string,
 }
 
+export type ConversationProps={ 
+    id:number, 
+    user_id:number,
+    to_id:bigint,
+    client_name:string,
+    createdAt:Date,
+    updatedAt:Date,
+}
 
 const StoreContext=createContext({} as StoreContextProps)
 export const useStoreContext=()=>useContext(StoreContext)
@@ -62,7 +74,7 @@ const [isAuth, setIsAuth]=useState<boolean>(false)
 const [isLoading, setIsLoading]=useState<boolean>(false)
 const [user, setUser]=useState<UserProps>()
 const [messages, setMessages]=useState<MessageProps[]>()
-
+const [conversations, setConversations]=useState<ConversationProps[]>()
 const signup= async ({user}:UserType)=>{ 
 try{ 
     await axios.post(`${path}/signup`, user)
@@ -119,9 +131,10 @@ const logout= async ()=>{
 
 }
 
-const sendMessage=async(message:string)=>{ 
+const sendMessage=async(message:string,id:number)=>{ 
+    console.log (user)
     try{ 
-        const res=await axios.post(`${msgURL}/sendmessage`, message)
+        await axios.post(`${msgURL}/sendmessage/?id${id}`, {message:message, name:user?.name})
         
     }catch(e){ 
         console.log(e)
@@ -133,10 +146,21 @@ const getMessages=async()=>{
     try{
         const data=await axios.get(`${msgURL}/getmgs`)
         setMessages(data.data)
+        console.log("here")
     }catch(e){ 
         console.log(e)
     }
 
+}
+
+const getConversations=async()=>{ 
+    try{ 
+        const res=await axios.get(`${msgURL}/conversations`)
+        setConversations(res.data)
+
+    }catch(e){ 
+
+    }
 }
 
 useEffect(()=>{console.log(messages)},[messages])
@@ -154,7 +178,10 @@ useEffect(()=>{console.log(messages)},[messages])
                             isLoading,
                             logout,
                             getMessages,
-                            messages
+                            messages,
+                            sendMessage,
+                            getConversations,
+                            conversations,
 
                           }}
             >

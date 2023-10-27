@@ -45,7 +45,7 @@ export const BurgerMenu: React.FC<BurgerMenuProps> = () => {
       
         <ol className={cl.menu_ol}>
           {Elements.map((el) => (
-            <MyMenu {...el} />
+            <MyMenu key={el.id} {...el} />
           ))}
         </ol>
      
