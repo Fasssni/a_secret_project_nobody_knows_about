@@ -27,9 +27,12 @@ type StoreContextProps={
     isLoading:boolean,
     getMessages:()=> void,
     messages:MessageProps[]|undefined,
-    sendMessage:(message:string, id:number)=>Promise<void>,
+    sendMessage:(text:string,convId:number, toId:bigint)=>Promise<void>,
     getConversations:()=>void,
     conversations:ConversationProps[]|undefined,
+    chat:MessageProps[]|undefined,
+    getUserChat:(id:number)=>void,
+   
 
 }
 
@@ -50,6 +53,7 @@ type MessageProps={
     user_id:number,
     text:string,
     name:string,
+    conversation_id:number,
 }
 
 export type ConversationProps={ 
@@ -59,6 +63,12 @@ export type ConversationProps={
     client_name:string,
     createdAt:Date,
     updatedAt:Date,
+    user_pic:string,
+}
+
+type ChatProps={ 
+    messages:MessageProps[],
+    convInfo:ConversationProps
 }
 
 const StoreContext=createContext({} as StoreContextProps)
@@ -75,6 +85,7 @@ const [isLoading, setIsLoading]=useState<boolean>(false)
 const [user, setUser]=useState<UserProps>()
 const [messages, setMessages]=useState<MessageProps[]>()
 const [conversations, setConversations]=useState<ConversationProps[]>()
+const [chat, setChat]=useState<MessageProps[]>()
 const signup= async ({user}:UserType)=>{ 
 try{ 
     await axios.post(`${path}/signup`, user)
@@ -120,7 +131,7 @@ try{
 
 const logout= async ()=>{ 
     try{ 
-        setIsLoading(true)
+       setIsLoading(true)
        const res= await axios.post(`${path}/logout`, {withCredentials:true})
        console.log(res)
     }catch(e){
@@ -131,10 +142,16 @@ const logout= async ()=>{
 
 }
 
-const sendMessage=async(message:string,id:number)=>{ 
+const sendMessage=async(text:string,convId:number, toId:bigint)=>{ 
     console.log (user)
+    
     try{ 
-        await axios.post(`${msgURL}/sendmessage/?id${id}`, {message:message, name:user?.name})
+        
+        await  axios.post(`${msgURL}/sendmessage?id=${convId}`, {
+            text:text, 
+            name:user?.name, 
+            user_id:user?.id,
+            to_id:toId})
         
     }catch(e){ 
         console.log(e)
@@ -144,7 +161,7 @@ const sendMessage=async(message:string,id:number)=>{
 const getMessages=async()=>{ 
 
     try{
-        const data=await axios.get(`${msgURL}/getmgs`)
+        const data=await axios.get(`${msgURL}/getmgs?user_id=${user?.id}`)
         setMessages(data.data)
         console.log("here")
     }catch(e){ 
@@ -155,11 +172,21 @@ const getMessages=async()=>{
 
 const getConversations=async()=>{ 
     try{ 
-        const res=await axios.get(`${msgURL}/conversations`)
+        const res=await axios.get(`${msgURL}/conversations?user_id=${user?.id}`)
         setConversations(res.data)
 
     }catch(e){ 
 
+    }
+}
+
+const getUserChat=async(id:number)=>{ 
+    try{ 
+        
+        const res=await axios.get(`${msgURL}/getchat/${id}?user_id=${user?.id}`)
+        setChat(res.data)
+    }catch(e){ 
+        console.log(e)
     }
 }
 
@@ -182,6 +209,8 @@ useEffect(()=>{console.log(messages)},[messages])
                             sendMessage,
                             getConversations,
                             conversations,
+                            chat,
+                            getUserChat,
 
                           }}
             >

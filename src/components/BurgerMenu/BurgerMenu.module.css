@@ -1,4 +1,5 @@
 .burgermenu_main {
+   
     position: fixed;
     height: 100vh;
     background-color: white;
@@ -14,6 +15,7 @@
     top: 0;
     right: 0;
     cursor: ew-resize;
+    border-right: 2px solid black;
   }
 
 

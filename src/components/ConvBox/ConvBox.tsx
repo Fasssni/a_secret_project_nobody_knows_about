@@ -1,15 +1,25 @@
-import { ConversationProps } from "../../store/api"
+import { ConversationProps, useStoreContext } from "../../store/api"
 import cl from "./ConvBox.module.css"
 import styled from 'styled-components';
 import { memo, useState, useEffect} from "react";
+import { useNavigate } from "react-router-dom";
+
 
 
 export const ConvBox=memo((item:ConversationProps)=>{ 
   
     console.log("Rerendered")
-
+    const {getUserChat}=useStoreContext()
+   
     const [randomColor, setRandomColor] = useState('');
-    const [isSelected, setIsSelected]=useState<boolean>(false)
+    
+
+    const navigate=useNavigate()
+
+    const onClickHandler= async ()=>{ 
+        await getUserChat(item.id)
+        navigate(`/inbox/${item.id}`)
+    }
 
     useEffect(() => {
       // Generate a new random color on every render
@@ -17,13 +27,20 @@ export const ConvBox=memo((item:ConversationProps)=>{
       const newRandomColor = randomColors[Math.floor(Math.random() * randomColors.length)];
       setRandomColor(newRandomColor);
     }, []);
+    
+  
 
-
-    return  <Container key={item.id}>
-                <Avatar style={{backgroundColor:`${randomColor}`}}>
+    return  <Container onClick={ ()=>  onClickHandler()}>
+                <Avatar style={{backgroundColor:item.user_pic?"none":`${randomColor}`}}
+                >
+                    {item.user_pic&&
+                                  <img src={item.user_pic}
+                                       className={cl.user_pic}
+                                  >
+                                  </img>}
                     <p style={{color:"white",
                             textAlign:"center"}}>
-                        {item.client_name[0]}
+                        {!item.user_pic&&item.client_name[0]}
                     </p></Avatar>
                 <Content>
                 <CustomerName>{item.client_name}</CustomerName>
@@ -39,7 +56,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: none;
   border-radius: 8px;
   margin-bottom: 10px;
   cursor:pointer;

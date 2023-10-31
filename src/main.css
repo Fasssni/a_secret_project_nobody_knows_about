@@ -25,6 +25,9 @@ h1{
 h2{
     font-family: 'Poppins', sans-serif;
 }
+h3{
+    font-family: 'Poppins', sans-serif;
+}
 
 p{
     font-family: 'Poppins', sans-serif;
@@ -333,5 +336,14 @@ button{
 
 .integrate{ 
     margin-top:10vh;
+}
+
+.in_details_main{ 
+    width:100%;
+    min-height: 100vh;
+    margin-top:10vh;
+    display: flex;
+    justify-content: center;
+    align-items: start;
 }
 

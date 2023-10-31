@@ -10,6 +10,7 @@ import { BurgerMenu } from './components/BurgerMenu/BurgerMenu'
 import { useUIContext } from './store/uiContext'
 import { Inbox } from './pages/Inbox'
 import { Integrate } from './pages/Integrate'
+import { IntegrationDetailPage } from './pages/IntegrationDetailPage'
 
 
 
@@ -47,8 +48,10 @@ function App() {
                  
                   {isAuth&&(
                   <>
-                    <Route path="/inbox" element={<Inbox/>}/>
-                    <Route path="/integrate" element={<Integrate/>}/>
+                    <Route path="/inbox/" element={<Inbox/>}/>
+                    <Route path="/inbox/:conv_id" element={<Inbox/>}/>
+                    <Route path="/integrate/" element={<Integrate/>}/>
+                    <Route path="/integrate/:integration" element={<IntegrationDetailPage/>}/>
                   </>
                   )}
 

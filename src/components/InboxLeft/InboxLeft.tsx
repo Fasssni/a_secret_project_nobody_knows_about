@@ -1,7 +1,8 @@
 import cl from "./InboxLeft.module.css"
-import { useStoreContext } from "../../store/api";
+import { ConversationProps, useStoreContext } from "../../store/api";
 import { useEffect, useState } from "react";
 import { ConvBox } from "../ConvBox/ConvBox";
+import { Route } from "react-router-dom";
 
 export const InboxLeft=()=>{
 
@@ -18,9 +19,10 @@ export const InboxLeft=()=>{
 
     return <div className={cl.inboxleft_main}>
 
-             {conversations?.map((item)=>{ 
-                  return <ConvBox key={item.id} {...item}/>
+             {conversations?.map((item:ConversationProps)=>{ 
+                  return <ConvBox {...item}/>
                 })
                 }
+              
            </div>
 }
