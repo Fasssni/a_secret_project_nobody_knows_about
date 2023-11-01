@@ -19,7 +19,7 @@ export const Navbar=()=>{
         },
         {   id:2,
             title:"Integrarions", 
-            link:"/"
+            link:"/integrate"
         },
     ]
 
@@ -72,7 +72,11 @@ export const Navbar=()=>{
                         :
             <div className={cl.right_side}>
                             <ol className={cl.list_group}>
-                               {navEls.map((el)=><li key={el.id}>{el.title}</li>)}
+                               {navEls.map((el)=><li key={el.id}
+                                                     onClick={()=>navigate(el.link)}
+                                                     >
+                                                     {el.title}
+                                                 </li>)}
                             </ol>
                             {/* <div className="buttons">
                                  <button className={cl.profile_icon}></button>

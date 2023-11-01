@@ -336,6 +336,7 @@ button{
 
 .integrate{ 
     margin-top:10vh;
+
 }
 
 .in_details_main{ 
@@ -344,6 +345,10 @@ button{
     margin-top:10vh;
     display: flex;
     justify-content: center;
-    align-items: start;
 }
 
+.automate {
+    margin-top: 10vh;
+    height:100vh;
+    width: 100%;
+}

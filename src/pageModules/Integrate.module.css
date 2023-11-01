@@ -3,9 +3,13 @@
     position: relative;
     margin-top:10vh;
     min-height: 110vh;
-    max-width: 1200px;
+    width: 90%;
     margin-left:2rem;
     margin-right:2rem;
+    display:flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
     
     
   }

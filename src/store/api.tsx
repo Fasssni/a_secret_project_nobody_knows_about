@@ -1,6 +1,7 @@
 import axios from "axios"
 import {createContext, useContext, useState, useEffect} from "react"
 
+
 export type signupProps={
     name:string, 
     surname:string,
@@ -31,7 +32,7 @@ type StoreContextProps={
     getConversations:()=>void,
     conversations:ConversationProps[]|undefined,
     chat:MessageProps[]|undefined,
-    getUserChat:(id:number)=>void,
+    getUserChat:(id:number, user_id:number)=>{close:()=>void}|undefined,
    
 
 }
@@ -70,6 +71,11 @@ type ChatProps={
     messages:MessageProps[],
     convInfo:ConversationProps
 }
+
+interface WebSocketMessage {
+    type: string;
+    data: any;
+  }
 
 const StoreContext=createContext({} as StoreContextProps)
 export const useStoreContext=()=>useContext(StoreContext)
@@ -180,21 +186,68 @@ const getConversations=async()=>{
     }
 }
 
-const getUserChat=async(id:number)=>{ 
-    try{ 
+
+
+// const getUserChat=async(id:number)=>{ 
+//     try{ 
         
-        const res=await axios.get(`${msgURL}/getchat/${id}?user_id=${user?.id}`)
-        setChat(res.data)
+//         const res=await axios.get(`${msgURL}/getchat/${id}?user_id=${user?.id}`)
+//         setChat(res.data)
+//     }catch(e){ 
+//         console.log(e)
+//     }
+// }
+
+const getUserChat=(id:number, user_id:number)=>{ 
+    try{ 
+        const socket=new WebSocket("ws://localhost:5001")
+        socket.onopen=()=>{ 
+            const data={ 
+                method:"chat-connection", 
+                conversation_id:id, 
+                user_id
+
+            }
+            socket.send(JSON.stringify(data))
+            console.log("the connection is open")
+        }
+        socket.onmessage=(event)=>{ 
+           
+            const messages=JSON.parse(event.data)
+            console.log(messages)
+            switch(messages.method){
+                case "chat-connection":
+                    console.log(messages, "here")
+                    setChat(messages.messageData)
+                    break
+                case "message":
+                    if(id===messages.message.conversation_id){
+                    setChat((prev)=>[...prev!,messages.message])
+                    }
+                    break
+            }
+        }
+
+        return {
+            close:()=>socket.close()
+        }
+        
+        
     }catch(e){ 
         console.log(e)
     }
 }
 
-useEffect(()=>{console.log(messages)},[messages])
+
+
+
+
+useEffect(()=>{console.log(chat)},[chat])
 
 
 
     return (
+     
             <StoreContext.Provider 
                           value={{
                             login,
@@ -216,6 +269,7 @@ useEffect(()=>{console.log(messages)},[messages])
             >
               {children}
             </StoreContext.Provider>
+        
     )
 
 }

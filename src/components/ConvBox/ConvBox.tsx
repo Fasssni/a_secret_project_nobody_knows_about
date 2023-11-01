@@ -17,7 +17,7 @@ export const ConvBox=memo((item:ConversationProps)=>{
     const navigate=useNavigate()
 
     const onClickHandler= async ()=>{ 
-        await getUserChat(item.id)
+        // await getUserChat(item.id, item.user_id)
         navigate(`/inbox/${item.id}`)
     }
 

@@ -16,22 +16,19 @@ export const Chat=({convId}:{convId:string})=>{
         }
     }
     
-    console.log(chat)
+   
 
    
   
     
     useEffect(() => {
+      
       if(!convId)return 
-          const time= setInterval(()=>{
-            getUserChat(parseInt(convId,10))
-          },3000);
-       
-        
-        return ()=> clearInterval(time)
-  
-    
+      const socket=chatInfo&&getUserChat(parseInt(convId,10),chatInfo[0].user_id)
+      return ()=>socket?.close()
+                 
     }, [convId]);
+     
 
     return(
    <div className="chat_main">    
