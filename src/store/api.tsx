@@ -29,10 +29,11 @@ type StoreContextProps={
     getMessages:()=> void,
     messages:MessageProps[]|undefined,
     sendMessage:(text:string,convId:number, toId:bigint)=>Promise<void>,
-    getConversations:()=>void,
+    getConversations:()=>{close:()=>void}|undefined,
     conversations:ConversationProps[]|undefined,
     chat:MessageProps[]|undefined,
-    getUserChat:(id:number, user_id:number)=>{close:()=>void}|undefined,
+    getUserChat:(id:number)=>{close:()=>void}|undefined,
+    createTgBot:(token:string)=>void,
    
 
 }
@@ -55,6 +56,7 @@ type MessageProps={
     text:string,
     name:string,
     conversation_id:number,
+    createdAt:string,
 }
 
 export type ConversationProps={ 
@@ -65,6 +67,8 @@ export type ConversationProps={
     createdAt:Date,
     updatedAt:Date,
     user_pic:string,
+    bot_name:string,
+    channel: string
 }
 
 type ChatProps={ 
@@ -176,16 +180,47 @@ const getMessages=async()=>{
 
 }
 
-const getConversations=async()=>{ 
-    try{ 
-        const res=await axios.get(`${msgURL}/conversations?user_id=${user?.id}`)
-        setConversations(res.data)
+// const getConversations=async()=>{ 
+//     try{ 
+//         const res=await axios.get(`${msgURL}/conversations?user_id=${user?.id}`)
+//         setConversations(res.data)
 
-    }catch(e){ 
+//     }catch(e){ 
 
+//     }
+// }
+
+
+const getConversations=()=>{ 
+    try {
+        const socket=new WebSocket("ws://localhost:5001")
+         socket.onopen=()=>{
+            const data={ 
+                method:"conversations",
+                user_id:user?.id,
+            }
+            socket.send(JSON.stringify(data))
+            console.log("conversation socket is open")
+        }
+        socket.onmessage=(event)=>{ 
+            const message=JSON.parse(event.data)
+            console.log(message)
+            switch(message.method){ 
+                case "conversations":
+                    setConversations(message.conversations)
+                    break
+                case "new-conversation":
+                    setConversations(prev=>[...prev!,message.message])
+                    break
+            }
+        }
+        return { 
+            close:()=>socket.close()
+         }
+    }catch(e){
+        console.log(e)
     }
 }
-
 
 
 // const getUserChat=async(id:number)=>{ 
@@ -198,14 +233,15 @@ const getConversations=async()=>{
 //     }
 // }
 
-const getUserChat=(id:number, user_id:number)=>{ 
+const getUserChat=(id:number)=>{ 
+    console.log("the functions has been called")
     try{ 
         const socket=new WebSocket("ws://localhost:5001")
         socket.onopen=()=>{ 
             const data={ 
                 method:"chat-connection", 
                 conversation_id:id, 
-                user_id
+                user_id:user?.id,
 
             }
             socket.send(JSON.stringify(data))
@@ -221,6 +257,7 @@ const getUserChat=(id:number, user_id:number)=>{
                     setChat(messages.messageData)
                     break
                 case "message":
+                    
                     if(id===messages.message.conversation_id){
                     setChat((prev)=>[...prev!,messages.message])
                     }
@@ -234,6 +271,15 @@ const getUserChat=(id:number, user_id:number)=>{
         
         
     }catch(e){ 
+        console.log(e)
+    }
+}
+
+const createTgBot=async (token:string)=>{
+    try{
+        const response= await axios.post(`${msgURL}/createbot?user_id=${user?.id}`,{token})
+        console.log(response.data)
+    }catch(e){
         console.log(e)
     }
 }
@@ -264,6 +310,7 @@ useEffect(()=>{console.log(chat)},[chat])
                             conversations,
                             chat,
                             getUserChat,
+                            createTgBot
 
                           }}
             >

@@ -1,0 +1,40 @@
+.details_main{ 
+    margin-top: 2rem;
+    min-height:50vh;
+    width: 35%;
+    background-color: white;
+    border-radius: 12px;
+    
+    display:flex;
+    flex-direction: column;
+
+    
+}
+
+.title{
+    font-size: 15px;
+    font-weight: 800;
+    color:#1a2b49;
+}
+
+.details{ 
+    height:3rem;
+    overflow: hidden;
+    display:flex; 
+    flex-direction: column;
+    margin-left:0.7rem;
+    margin-top:0.7rem
+
+
+}
+
+.bot_name{ 
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color:#1a2b49;
+
+}
+.channel_name{ 
+    display:flex
+}

@@ -1,10 +1,13 @@
+import { useStoreContext } from "../../store/api"
 import cl from "./Telegram.module.css"
 import {useState,FormEvent} from "react"
 
 export const Telegram=()=>{ 
+  const {createTgBot}=useStoreContext()
   const [token, setToken]=useState<string>("")
-  const onSubmitHandler=(e:FormEvent<HTMLDivElement>)=>{ 
-    e.stopPropagation()
+  const onSubmitHandler=async (e:FormEvent<HTMLDivElement>)=>{ 
+    e.preventDefault()
+    createTgBot(token)
     setToken("")
 
   }
