@@ -33,6 +33,12 @@ export const Navbar=()=>{
         width:window.innerWidth, 
     })
     const [isBurger, setIsBurger]=useState<boolean>(false)
+    const [myAccountModal, setMyAccountModal]=useState<boolean>(false)
+
+    const handleMyAccountModal=(e:MouseEvent)=>{ 
+        e.stopPropagation()
+        setMyAccountModal(prev=>!prev)
+    }
     
     const resizeHandler=()=>{ 
         setDim({...windowDimensions,
@@ -49,11 +55,15 @@ export const Navbar=()=>{
     const {width}=windowDimensions
 
     return(
-  <nav className={cl.navbar_main} style={{display:lp==="/login"||lp==="/signup"?"none":"flex"}}>
+  <nav className={cl.navbar_main} 
+       style={{display:lp==="/login"||lp==="/signup"?"none":"flex"}}
+       onClick={()=>myAccountModal&&setMyAccountModal(false)}>
      <h2 className={cl.logo} onClick={()=>navigate("/")}>Quarter</h2>
          {isAuth
             ?
-            <MyAccountUI />
+            <MyAccountUI handleMyAccountModal={handleMyAccountModal}
+                         myAccountModal={myAccountModal}
+                         />
             :
             <>
             {width<=784

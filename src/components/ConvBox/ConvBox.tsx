@@ -56,18 +56,23 @@ export const ConvBox=memo(({item,getConversationInfo}:ConvBoxProps)=>{
     return  <Container onClick={ ()=>  onClickHandler()}>
                 <Avatar style={{backgroundColor:item.user_pic?"none":`${randomColor}`}}
                 >
-                    {item.user_pic&&
+                    {item.user_pic?
                                   <img src={item.user_pic}
                                        className={cl.user_pic}
                                   >
-                                  </img>}
-                    <p style={{color:"white",
-                            textAlign:"center"}}>
-                        {!item.user_pic&&item.client_name[0]}
-                    </p>
+                                  </img>
+                    :
+                    <>
+                    <div className={cl.user_pic}>
+                      <p style={{color:"white",
+                              textAlign:"center"}}>
+                          {!item.user_pic&&item.client_name[0]}
+                      </p>
+                    </div>
                     <span className={cl.channel_icon}>
                         <TelegramIcon/>
                     </span>
+                    </>}
                   </Avatar>
                 <Content>
                 <CustomerName>{item.client_name}</CustomerName>

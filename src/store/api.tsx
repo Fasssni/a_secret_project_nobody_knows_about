@@ -1,5 +1,6 @@
-import axios from "axios"
+import axios, { AxiosError } from "axios"
 import {createContext, useContext, useState, useEffect} from "react"
+import { useNavigate } from "react-router-dom"
 
 
 export type signupProps={
@@ -34,6 +35,9 @@ type StoreContextProps={
     chat:MessageProps[]|undefined,
     getUserChat:(id:number)=>{close:()=>void}|undefined,
     createTgBot:(token:string)=>void,
+    error:any,
+    clearChat:(conv_id:string)=>void,
+    removeChat:(conv_id:string)=>void,
    
 
 }
@@ -96,6 +100,8 @@ const [user, setUser]=useState<UserProps>()
 const [messages, setMessages]=useState<MessageProps[]>()
 const [conversations, setConversations]=useState<ConversationProps[]>()
 const [chat, setChat]=useState<MessageProps[]>()
+
+
 const signup= async ({user}:UserType)=>{ 
 try{ 
     await axios.post(`${path}/signup`, user)
@@ -104,50 +110,63 @@ try{
         console.log(err)
   }
 }
+ 
+ const [error, setError]=useState<any>()
 
  const login=async({email, password}:LogingProps)=>{
     try{
         setIsLoading(true)
         const response =await axios.post(`${path}/login`, {email, password}, {withCredentials:true})
-        localStorage.setItem("accesToken",response.data.accessToken.accessToken)
+        console.log(response)
+        // localStorage.setItem("accesToken",response.data.accessToken.accessToken)
         setUser(response.data.user)
         setIsAuth(true)
-    }catch(err){ 
+    }catch(err:any){ 
          console.log(err)
+         setError(err)
     }finally{
         setIsLoading(false)
     }
 
 }
+
 
  const checkAuth= async ()=>{ 
     try{
        setIsLoading(true)
        const response= await axios.get(`${path}/checkauth`, {withCredentials:true})
-       setIsAuth(true)
-       setUser(response.data)
-       console.log(response)
+       console.log(response.status, "status")
 
-    }catch(e){
-        console.log(e)
+      if(response.status===201){
+        setIsAuth(true)
+        setUser(response.data)
+        console.log(response)
+       }
+    }catch(e:any){
+         if(e.response.status===401){ 
+            setIsAuth(false)
+            console.log("Unauthorized")
+         }
+        
+        
     }finally{
-        setTimeout(()=>{
           setIsLoading(false)
-    },1000
-        )
     }
     
 }
 
+
 const logout= async ()=>{ 
     try{ 
        setIsLoading(true)
-       const res= await axios.post(`${path}/logout`, {withCredentials:true})
-       console.log(res)
+       const res= await axios.post(`${path}/logout`, {},{withCredentials:true})
+       await checkAuth()
     }catch(e){
         console.log(e)
     }finally{
         setIsLoading(false)
+        
+        
     }
 
 }
@@ -161,7 +180,8 @@ const sendMessage=async(text:string,convId:number, toId:bigint)=>{
             text:text, 
             name:user?.name, 
             user_id:user?.id,
-            to_id:toId})
+            to_id:toId
+        })
         
     }catch(e){ 
         console.log(e)
@@ -173,22 +193,12 @@ const getMessages=async()=>{
     try{
         const data=await axios.get(`${msgURL}/getmgs?user_id=${user?.id}`)
         setMessages(data.data)
-        console.log("here")
     }catch(e){ 
         console.log(e)
     }
 
 }
 
-// const getConversations=async()=>{ 
-//     try{ 
-//         const res=await axios.get(`${msgURL}/conversations?user_id=${user?.id}`)
-//         setConversations(res.data)
-
-//     }catch(e){ 
-
-//     }
-// }
 
 
 const getConversations=()=>{ 
@@ -208,9 +218,11 @@ const getConversations=()=>{
             switch(message.method){ 
                 case "conversations":
                     setConversations(message.conversations)
+                    console.log("conversations", conversations)
                     break
                 case "new-conversation":
-                    setConversations(prev=>[...prev!,message.message])
+                    setConversations((prevConversations) => [...prevConversations!, message.message])
+                    console.log("new conversation", conversations,"here", message.message)
                     break
             }
         }
@@ -223,20 +235,13 @@ const getConversations=()=>{
 }
 
 
-// const getUserChat=async(id:number)=>{ 
-//     try{ 
-        
-//         const res=await axios.get(`${msgURL}/getchat/${id}?user_id=${user?.id}`)
-//         setChat(res.data)
-//     }catch(e){ 
-//         console.log(e)
-//     }
-// }
+
 
 const getUserChat=(id:number)=>{ 
     console.log("the functions has been called")
     try{ 
-        const socket=new WebSocket("ws://localhost:5001")
+       
+        const socket=new WebSocket(`ws://localhost:5001`)
         socket.onopen=()=>{ 
             const data={ 
                 method:"chat-connection", 
@@ -284,11 +289,33 @@ const createTgBot=async (token:string)=>{
     }
 }
 
+const clearChat=async (conv_id:string)=>{
+    try{ 
+        const res=await axios.delete(`${msgURL}/clearchat?conv_id=${conv_id}`)
+        if(res){
+            getUserChat(parseInt(conv_id))
+        }
+    }catch(e){
+        console.log(e)
+    }
+}
+
+const removeChat=async (conv_id: string)=> {
+    try{
+        const res=await axios.delete(`${msgURL}/removechat?conv_id=${conv_id}`)
+        console.log(res)
+        if(res){
+            getConversations()
+        }
+    }catch(e){
+        console.log(e)
+    }
+}
 
 
 
 
-useEffect(()=>{console.log(chat)},[chat])
+useEffect(()=>{console.log("CONVERSATIONS", conversations)},[conversations])
 
 
 
@@ -310,7 +337,10 @@ useEffect(()=>{console.log(chat)},[chat])
                             conversations,
                             chat,
                             getUserChat,
-                            createTgBot
+                            createTgBot,
+                            error, 
+                            clearChat,
+                            removeChat,
 
                           }}
             >

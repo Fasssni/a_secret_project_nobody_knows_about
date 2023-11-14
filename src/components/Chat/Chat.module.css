@@ -4,22 +4,29 @@
     align-items:center;
     width:100%;
 }
-
-.chat_main{
-   
-    width:65%;
+.chat_container{ 
+    width:75%;
     display:flex;
     column-gap: 2rem;
-    align-items: center;
+    align-items: start;
+    height:100vh;
+}
+.chat_main{
+    width:100%;
+    display:flex;
+    justify-content: space-around;
+    align-items: baseline;
+    height:100vh;
 }
 
 .chat_window{ 
-    margin-top:4rem;
-    width:75%;
+    
+    width:65%;
     min-height: 55vh;
     display:flex;
     flex-direction:column;
-    align-items: center;
+   
+
 
 }
 
@@ -41,7 +48,7 @@
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
     
-    padding:2rem 1rem;
+    padding:0rem 1rem;
     font-size:0.9rem; 
     
     overflow-y: auto;

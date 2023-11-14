@@ -16,6 +16,7 @@ export const Chat=({convId,convInfo}:ChatType)=>{
     const [text, setText]=useState<string>("")
     const chatInfo:ConversationProps[]|undefined=conversations?.filter(item=>item.id===parseInt(convId!))
     
+    
     const handleMessage=async (e:FormEvent<HTMLFormElement>)=>{ 
         e.preventDefault()
         if(typeof convId===undefined) return
@@ -30,12 +31,11 @@ export const Chat=({convId,convInfo}:ChatType)=>{
       
           
   }
-  const ChannelIcon=convInfo&&channels[convInfo.channel]
 
+
+  const ChannelIcon=convInfo&&channels[convInfo.channel] 
    
- 
-    
-    useEffect(() => {
+   useEffect(() => {
       if(!convId)return 
       const socket=getUserChat(parseInt(convId,10))
    
@@ -52,13 +52,15 @@ export const Chat=({convId,convInfo}:ChatType)=>{
      
 
     return(
-                <div className={cl.chat_main}>
-                  {chat?
+            <div className={cl.chat_container}>
+              <div className={cl.chat_main}>
+                  {convId?
                 <>
                 
                 <div className={cl.chat_window}>
                   <ChatBar client_name={convInfo?.client_name}
                            ChannelIcon={ChannelIcon}
+                           convId={convId}
                            />
                   <div className={cl.conv_items}>
                       {chat?.map((message, index) => (
@@ -90,6 +92,7 @@ export const Chat=({convId,convInfo}:ChatType)=>{
                       :
                       <h3>No messages yet..</h3>
                       }
+                  </div>
                 </div> 
   )
 }

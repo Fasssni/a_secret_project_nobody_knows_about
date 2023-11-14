@@ -24,7 +24,14 @@ import { Automate } from './pages/Automate'
 function App() {
 
   const {checkAuth, isAuth,isLoading}=useStoreContext()
-  const {width}=useUIContext()
+  const {width,closeChatModal, chatModal}=useUIContext()
+  
+  const appClickHandler=()=>{
+    if(chatModal){
+      closeChatModal()
+    } 
+
+  }
 
   useEffect(()=>{
 
@@ -33,7 +40,8 @@ function App() {
   
 },[])
  
-  return <div className="App">
+  return <div className="App" 
+              onClick={appClickHandler}>
             {isAuth &&
             <BurgerMenu/>
             }
@@ -43,18 +51,23 @@ function App() {
             }}>
               <Routes>
                   <Route path="/" element={<Home/>}/>
-                  <Route path="/signup"element={<Signup/>}/>
-                  <Route path="/login" element={<Login/>}/>
                   <Route path="/integrate/" element={<Integrate/>}/>
                   <Route path="/integrate/:integration" element={<IntegrationDetailPage/>}/>
-                  <Route path="/automate" element={<Automate/>}/>
+                
                   
                  
-                  {isAuth&&(
+                  {isAuth?(
                   <>
                     <Route path="/inbox/" element={<Inbox/>}/>
                     <Route path="/inbox/:conv_id" element={<Inbox/>}/>
+                    <Route path="/automate" element={<Automate/>}/>
                   </>
+                  ):(
+                   <>
+                      <Route path="/signup"element={<Signup/>}/>
+                      <Route path="/login" element={<Login/>}/>
+                   </>
+
                   )}
 
                   <Route path="*" element={<Home/>}/>

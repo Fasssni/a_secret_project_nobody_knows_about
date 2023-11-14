@@ -6,7 +6,7 @@ import { LogingProps,  useStoreContext } from "../store/api"
 type LoginPropertyProps="email"|"password"
 
 export const Login=()=>{ 
-    const {login, checkAuth}=useStoreContext()
+    const {login, checkAuth,error}=useStoreContext()
     const [showPassword, setShowPassword]=useState(false)
     
     const [creds, setCreds]=useState<LogingProps>({email:"",password:""})
@@ -22,18 +22,19 @@ export const Login=()=>{
          e.preventDefault()
          
          await login(creds)
-         
-
          setCreds({...creds, email:"",password:""})
-         
-         navigate("/")
-         
+         if(!error){ 
+            navigate("/") 
+        }
 
+        
+        
 
     }
     
     return <div className="login_main">
                 <form className="signup_form">
+                    {error&&<p style={{color:"red"}}>{error.response.data}</p>}
                     <div className="greeting">
                         <h2 className="greeting_title">Welcome Back  👋</h2>
                         <p className="greeting_description">We are happy to have you back</p>

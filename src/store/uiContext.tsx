@@ -3,6 +3,10 @@ import {createContext, useContext,useState, Dispatch} from "react"
 type uiContextProps={ 
    width:string,
    setWidth: Dispatch<React.SetStateAction<string>>
+   chatModal:boolean,
+   handleChatModal:(e:Event)=>void,
+   closeChatModal:()=>void,
+
 }
 type ChildrenType={ 
     children:React.ReactNode
@@ -15,11 +19,25 @@ export const UiContextProvider=({children}:ChildrenType)=>{
         const storedWidth=localStorage.getItem("barWidth")
         return storedWidth||"20%"
    }); // Initial width
+   const [chatModal, setChatModal]=useState<boolean>(false)
 
-
+   const handleChatModal=(e:Event)=>{ 
+      e.stopPropagation()
+      setChatModal(prev=>!prev)
+    
+   }
+   const closeChatModal=()=>{ 
+    
+    setChatModal(prev=>false)
+  
+ }
    return <uiContext.Provider value={{
                                 width, 
-                                setWidth
+                                setWidth,
+                                chatModal,
+                                handleChatModal,
+                                closeChatModal,
+
                               }}
                               > 
                          {children}

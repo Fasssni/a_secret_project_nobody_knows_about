@@ -1,5 +1,5 @@
 .my_account{
-    
+    position: relative;
     background-color: transparent ;
     margin-right:2rem;
     width:15%;
@@ -15,4 +15,47 @@
     margin-left:1rem;
     width:3.6rem;
     border-radius:50%;
+}
+
+.myaccount_modal{ 
+    position: absolute;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 100px 80px rgba(0,0,0,.04), 0 62.9566px 72.7037px rgba(0,0,0,.039), 0 39.436px 60.3952px rgba(0,0,0,.038), 0 21.9738px 26.706px rgba(0,0,0,.035), 0 9.33239px 4.959px rgba(0,0,0,.031), 0 1.2653px 0.418345px rgba(0,0,0,.025), 0 -2.02863px 0 rgba(0,0,0,.017);
+    gap: 0.7rem;
+    padding: 20px;
+    right: 70%;
+    text-align: initial;
+    top: 100%;
+    width: 20vh;
+    z-index: 1;
+    display:flex;
+    flex-direction: column;
+    align-items: end;
+    
+
+
+
+}
+
+.modalmenu_element{
+    color: #333;
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 16px;
+    margin-bottom: 10px;
+    outline: none;
+    list-style: none;
+    
+}
+
+.modalmenu_element:hover{ 
+    color:#5871EB;
+}
+.modal_line{ 
+    border-bottom:1px solid #8191a5 ;
+    width:30%;
+    
+
 }
