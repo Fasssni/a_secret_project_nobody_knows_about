@@ -7,20 +7,53 @@
     position: relative;
     width:100%;
     height:auto;
+    background-color: #dcdfec;
+ 
+    
 }
 
 .home{ 
-    
+    height: 110vh;
     position: relative;
-    margin-top:10vh;
-    width:100%; 
-    background-color:#f4f5f7;
+   
+    width:100%;
     color:black;
+    margin-top:10vh;
+    padding: 15px 15px;
+    box-sizing: border-box;
+    
+    
 }
 
 .namer{
     width:80%;
     font-size:4rem;
+}
+
+.userAccount{ 
+     position:relative;
+     height:50%;
+     width:100%;
+     display:flex;
+     justify-content: center;
+     align-items:center;
+     flex-direction: column;
+     background-color: white;
+     border-radius: 15px;
+
+
+}
+
+.userTab{ 
+    height:100vh;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    flex-direction: column;
+    position: relative;
+    margin-top:10vh;
+    background-color:#a3a7aa;
+    color:black;
 }
 
 
@@ -63,23 +96,7 @@
     padding:15px 15px;
 }
 
-@media all and (max-width:725px) {
-    .home{ 
-        margin-top:7vh;
-    }
-    .namer{ 
-        font-size: 3rem;
-    }
-    .btn_left{
-        padding:15px 5px;
 
-    }
-
-    .btn_right{ 
-        padding:15px 5px;
-
-    }
-}
 
 @media all and (max-width:725px) {
     .namer{ 
@@ -95,7 +112,7 @@ h2{
     font-family: 'Poppins', sans-serif;
 }
 h3{
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Lato', sans-serif;
 }
 h4{
     font-family: 'Lato', sans-serif;
@@ -289,25 +306,7 @@ button{
     cursor: pointer;
 
 }
-.userAccount{ 
-     height:100vh;
-     display:flex;
-     justify-content: center;
-     align-items:center;
-     flex-direction: column;
-}
 
-.userTab{ 
-    height:100vh;
-    display:flex;
-    justify-content: center;
-    align-items:center;
-    flex-direction: column;
-    position: relative;
-    margin-top:10vh;
-    background-color:#a3a7aa;
-    color:black;
-}
 
 .inbox_main{
     width:100%;
@@ -316,7 +315,7 @@ button{
     display:flex;
     justify-content: start;
     align-items: start;
-    background-color: #c2c6ca;
+   
     column-gap: 2.5rem;
 }
 
@@ -332,7 +331,7 @@ button{
     display:flex;
     column-gap: 1rem;
     align-items: center;
-    padding-right:0.5rem;
+    
 
 }
 
@@ -343,6 +342,7 @@ button{
     outline: none;
     border:none;
     width:80%;
+    margin-left: 1rem;
 }
 
 .sender_button{
@@ -352,6 +352,8 @@ button{
     border:none;
     background-color: #0072ff;
     color:white;
+    width:15%;
+    margin-right:1rem;
 }
 
 .integrate{ 
@@ -372,4 +374,26 @@ button{
     height:100vh;
     width: 100%;
     
+}
+
+
+@media all and (max-width:784px) {
+    .home{ 
+        margin-top:5vh;
+    }
+    .namer{ 
+        font-size: 3rem;
+    }
+    .btn_left{
+        padding:15px 5px;
+
+    }
+
+    .btn_right{ 
+        padding:15px 5px;
+
+    }
+    .inbox_main{ 
+        margin-top: 5vh;
+    }
 }

@@ -69,10 +69,10 @@ export const ConvBox=memo(({item,getConversationInfo}:ConvBoxProps)=>{
                           {!item.user_pic&&item.client_name[0]}
                       </p>
                     </div>
+                    </>}
                     <span className={cl.channel_icon}>
                         <TelegramIcon/>
                     </span>
-                    </>}
                   </Avatar>
                 <Content>
                 <CustomerName>{item.client_name}</CustomerName>

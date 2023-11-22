@@ -54,7 +54,7 @@ export const Automate = () => {
 
     if (!connected) {
         return (
-            <div className="center" style={{marginTop:"15vh"}}>
+            <div className="center" style={{marginTop:"10vh"}}>
                 <div className="form">
                     <input
                         value={username}

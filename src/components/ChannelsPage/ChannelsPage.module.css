@@ -1,0 +1,49 @@
+.integratePage {
+    position: relative;
+    min-height: 110vh;
+    width: 90%;
+    margin-left:2rem;
+    margin-right:2rem;
+    display:flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    background-color: #fff ;
+    border-radius: 12px;
+   
+    
+    
+  }
+  
+  .integrationContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .integrationCard {
+    
+    border-radius: 8px;
+    padding: 20px;
+    flex: 1 1 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .integrationIcon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 10px;
+  }
+  
+  .integrationTitle {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .integrationDescription {
+    text-align: center;
+  }
+  

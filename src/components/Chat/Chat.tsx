@@ -5,6 +5,7 @@ import cl from  "./Chat.module.css"
 import { DetailsPanel } from "../DetailsPanel/DetailsPanel";
 import { ChatBar } from "../ChatBar/ChatBar";
 import { TelegramSvg } from "../../utils/svg";
+import { ChatForm } from "../ChatForm/ChatForm";
 
 type ChatType={ 
   convId?:string,
@@ -73,18 +74,10 @@ export const Chat=({convId,convInfo}:ChatType)=>{
                         </div>
                       ))}
                   </div>
-                    <form className="sender"
-                          onSubmit={(e)=>{handleMessage(e)}}
-                          >
-                            <input placeholder="Type a message.."
-                                  className="sender_input" 
-                                  value={text}
-                                  onChange={(e)=>setText(e.target.value)} 
-                                  >
-                            </input>
-                            <button className="sender_button">Send</button>
-                      </form>
-                     </div>
+                   <ChatForm chatInfo={chatInfo} 
+                             convId={convId}
+                   />
+                  </div>
                      <DetailsPanel convInfo={convInfo}
                                    ChannelIcon={ChannelIcon}
                                    />

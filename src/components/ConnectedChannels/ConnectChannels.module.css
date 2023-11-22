@@ -1,0 +1,15 @@
+.con_channels_main{ 
+    width:90%;
+    height: 10vh;
+    border-radius: 12px;
+    background-color: #fff;
+    margin-top: 1rem; 
+    margin-left: 2rem;
+    margin-right: 2rem;
+    padding:5px 15px;
+    box-sizing: border-box;
+    display:flex;
+    
+}
+
+

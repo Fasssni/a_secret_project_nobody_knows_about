@@ -1,6 +1,8 @@
 .inboxleft_main{ 
     background-color: white;
     width:25%;
-    height:110vh;
+    height:100vh;
     margin-left:1rem;
+    margin-top:1rem;
+    border-radius: 12px;
 }

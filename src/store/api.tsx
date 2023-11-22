@@ -118,7 +118,6 @@ try{
         setIsLoading(true)
         const response =await axios.post(`${path}/login`, {email, password}, {withCredentials:true})
         console.log(response)
-        // localStorage.setItem("accesToken",response.data.accessToken.accessToken)
         setUser(response.data.user)
         setIsAuth(true)
     }catch(err:any){ 
@@ -136,16 +135,16 @@ try{
        setIsLoading(true)
        const response= await axios.get(`${path}/checkauth`, {withCredentials:true})
        console.log(response.status, "status")
-
       if(response.status===201){
         setIsAuth(true)
         setUser(response.data)
         console.log(response)
        }
     }catch(e:any){
+         console.log(e)
          if(e.response.status===401){ 
             setIsAuth(false)
-            console.log("Unauthorized")
+            console.log(e)
          }
         
         

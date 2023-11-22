@@ -10,12 +10,13 @@
     column-gap: 2rem;
     align-items: start;
     height:100vh;
+    margin-top: 1rem;
 }
 .chat_main{
     width:100%;
     display:flex;
     justify-content: space-around;
-    align-items: baseline;
+    align-items: start;
     height:100vh;
 }
 

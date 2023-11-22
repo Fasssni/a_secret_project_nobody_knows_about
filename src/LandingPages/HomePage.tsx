@@ -2,6 +2,8 @@ import "../main.css"
 
 export const HomePage=()=>{ 
 
+
+   
     return <>
                 <div className="home_left">
                     <h1 className="namer">

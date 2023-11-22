@@ -26,6 +26,7 @@ export const Login=()=>{
          if(!error){ 
             navigate("/") 
         }
+        console.log(error)
 
         
         
@@ -34,7 +35,7 @@ export const Login=()=>{
     
     return <div className="login_main">
                 <form className="signup_form">
-                    {error&&<p style={{color:"red"}}>{error.response.data}</p>}
+                    {error&&<p style={{color:"red"}}>{error?.response?.data}</p>}
                     <div className="greeting">
                         <h2 className="greeting_title">Welcome Back  👋</h2>
                         <p className="greeting_description">We are happy to have you back</p>
