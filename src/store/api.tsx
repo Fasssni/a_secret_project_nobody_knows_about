@@ -19,29 +19,6 @@ export type LogingProps={
      password:string,
 }
 
-type StoreContextProps={ 
-    login:({email,password}:LogingProps)=>string|Promise<void>, 
-    signup:({user}:UserType)=>void, 
-    checkAuth:()=>void,
-    logout:()=>void,
-    isAuth:boolean,
-    user: UserProps|undefined,
-    isLoading:boolean,
-    getMessages:()=> void,
-    messages:MessageProps[]|undefined,
-    sendMessage:(text:string,convId:number, toId:bigint)=>Promise<void>,
-    getConversations:()=>{close:()=>void}|undefined,
-    conversations:ConversationProps[]|undefined,
-    chat:MessageProps[]|undefined,
-    getUserChat:(id:number)=>{close:()=>void}|undefined,
-    createTgBot:(token:string)=>void,
-    error:any,
-    clearChat:(conv_id:string)=>void,
-    removeChat:(conv_id:string)=>void,
-   
-
-}
-
 type UserProps={
     id:        number;
     name:      string;
@@ -85,6 +62,38 @@ interface WebSocketMessage {
     data: any;
   }
 
+export type connectedChannelsType={
+    name: string,
+    id: number,
+    channel:string
+}
+
+type StoreContextProps={ 
+    login:({email,password}:LogingProps)=>string|Promise<void>, 
+    signup:({user}:UserType)=>void, 
+    checkAuth:()=>void,
+    logout:()=>void,
+    isAuth:boolean,
+    user: UserProps|undefined,
+    isLoading:boolean,
+    getMessages:()=> void,
+    messages:MessageProps[]|undefined,
+    sendMessage:(text:string,convId:number, toId:bigint)=>Promise<void>,
+    getConversations:()=>{close:()=>void}|undefined,
+    conversations:ConversationProps[]|undefined,
+    chat:MessageProps[]|undefined,
+    getUserChat:(id:number)=>{close:()=>void}|undefined,
+    createTgBot:(token:string)=>void,
+    error:any,
+    clearChat:(conv_id:string)=>void,
+    removeChat:(conv_id:string)=>void,
+    
+    getChannels:()=>Promise<any>|undefined,
+   
+
+}
+
+
 const StoreContext=createContext({} as StoreContextProps)
 export const useStoreContext=()=>useContext(StoreContext)
 
@@ -100,6 +109,7 @@ const [user, setUser]=useState<UserProps>()
 const [messages, setMessages]=useState<MessageProps[]>()
 const [conversations, setConversations]=useState<ConversationProps[]>()
 const [chat, setChat]=useState<MessageProps[]>()
+
 
 
 const signup= async ({user}:UserType)=>{ 
@@ -311,13 +321,26 @@ const removeChat=async (conv_id: string)=> {
     }
 }
 
+const getChannels=async()=>{ 
+    try{
+        const response=await axios.get(`${path}/getchannels?id=${user?.id}`)
+        return response.data
+    }catch(e){
+        console.log(e) 
+    }
+}
 
 
 
-useEffect(()=>{console.log("CONVERSATIONS", conversations)},[conversations])
+
+useEffect(()=>{
+    console.log("CONVERSATIONS", conversations)
+    },[conversations])
 
 
-
+useEffect(()=>{ 
+    console.log(user,"USER")
+},[])
     return (
      
             <StoreContext.Provider 
@@ -340,6 +363,8 @@ useEffect(()=>{console.log("CONVERSATIONS", conversations)},[conversations])
                             error, 
                             clearChat,
                             removeChat,
+                            
+                            getChannels,
 
                           }}
             >

@@ -1,6 +1,6 @@
 .con_channels_main{ 
     width:90%;
-    height: 10vh;
+    height: auto;
     border-radius: 12px;
     background-color: #fff;
     margin-top: 1rem; 
@@ -9,7 +9,19 @@
     padding:5px 15px;
     box-sizing: border-box;
     display:flex;
+    flex-direction: column;
     
 }
 
+.con_channels_top{ 
+    display:flex;
+}
 
+
+.arrow{
+    cursor: pointer;
+}
+
+.channel_list{ 
+
+}

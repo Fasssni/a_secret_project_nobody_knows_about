@@ -1,7 +1,7 @@
 import React from 'react';
 import cl from './MyMenu.module.css';
 import { useNavigate } from 'react-router-dom';
-
+import {memo} from "react"
 type MyMenuProps = {
    
     id: number;
@@ -11,8 +11,9 @@ type MyMenuProps = {
 
 };
 
-export const MyMenu = ({id, name, link, icon}: MyMenuProps) => {
+export const MyMenu= memo(({id, name, link, icon}: MyMenuProps) => {
     const navigate=useNavigate()
+    console.log("rerendered")
   return (
     <div key={id}
          className={cl.my_menu_main}
@@ -24,4 +25,5 @@ export const MyMenu = ({id, name, link, icon}: MyMenuProps) => {
              </li>
     </div>
   );
-};
+}
+)

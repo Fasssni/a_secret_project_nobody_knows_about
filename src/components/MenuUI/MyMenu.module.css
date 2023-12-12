@@ -1,7 +1,12 @@
 .my_menu_main{ 
-
+   
+    width:40%;;
 
 }
 .menu_li{
     font-size: 1.2rem;
+}
+
+.menu_li:hover{
+    color:#5871EB;
 }
