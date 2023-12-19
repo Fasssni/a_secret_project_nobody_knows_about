@@ -1,23 +1,15 @@
 import React, { useState, MouseEvent, useEffect } from 'react';
 import cl from './BurgerMenu.module.css';
 import { useUIContext } from '../../store/uiContext';
-import Elements from '../../utils/menuels.json';
+import  {menuels as Elements} from '../../utils/menuels.tsx';
 import { MyMenu } from '../MenuUI/MyMenu';
 
-interface BurgerMenuProps {}
-
-type MenuProps = {
-  id: number;
-  name: string;
-  link: string;
-  icon: string;
-};
 
 export const BurgerMenu: React.FC<BurgerMenuProps> = () => {
   const { width, setWidth } = useUIContext();
 
   const handleResize = (event: MouseEvent<HTMLDivElement>) => {
-    if (event.clientX <= 369) {
+    if (event.clientX <= 270&&event.clientX>=55) {
       setWidth(`${event.clientX}px`);
     }
   };

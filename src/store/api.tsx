@@ -1,6 +1,7 @@
-import axios, { AxiosError } from "axios"
+import axios, { AxiosError, AxiosResponse } from "axios"
 import {createContext, useContext, useState, useEffect} from "react"
 import { useNavigate } from "react-router-dom"
+
 
 
 export type signupProps={
@@ -89,6 +90,7 @@ type StoreContextProps={
     removeChat:(conv_id:string)=>void,
     
     getChannels:()=>Promise<any>|undefined,
+    removeChannel:(id: number)=>Promise<any>|undefined,
    
 
 }
@@ -144,7 +146,7 @@ try{
     try{
        setIsLoading(true)
        const response= await axios.get(`${path}/checkauth`, {withCredentials:true})
-       console.log(response.status, "status")
+       console.log(response.data, "status")
       if(response.status===201){
         setIsAuth(true)
         setUser(response.data)
@@ -194,6 +196,7 @@ const sendMessage=async(text:string,convId:number, toId:bigint)=>{
         
     }catch(e){ 
         console.log(e)
+        
     }
 }
 
@@ -323,6 +326,7 @@ const removeChat=async (conv_id: string)=> {
 
 const getChannels=async()=>{ 
     try{
+        
         const response=await axios.get(`${path}/getchannels?id=${user?.id}`)
         return response.data
     }catch(e){
@@ -330,6 +334,16 @@ const getChannels=async()=>{
     }
 }
 
+const removeChannel=async(id:number)=>{ 
+    try{ 
+        const response = await axios.delete(`${msgURL}/deletebot?id=${id}`)
+        console.log("DELETE RESPONSE", response)
+        return response
+    }catch (e: AxiosError<unknown>) {
+        console.log(e);
+        return e as AxiosResponse;
+      }
+}
 
 
 
@@ -340,7 +354,7 @@ useEffect(()=>{
 
 useEffect(()=>{ 
     console.log(user,"USER")
-},[])
+},[user])
     return (
      
             <StoreContext.Provider 
@@ -365,6 +379,7 @@ useEffect(()=>{
                             removeChat,
                             
                             getChannels,
+                            removeChannel
 
                           }}
             >

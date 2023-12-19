@@ -33,6 +33,8 @@ function App() {
 
   }
 
+
+
   useEffect(()=>{
 
       checkAuth()
@@ -48,19 +50,17 @@ function App() {
             <Navbar/>
             <div style={{
                 marginLeft:isAuth?width:0
-            }}>
+            }}
+            >
               <Routes>
                   <Route path="/" element={<Home/>}/>
-                  <Route path="/integrate/" element={<Integrate/>}/>
-                  <Route path="/integrate/:integration" element={<IntegrationDetailPage/>}/>
-                
                   
-                 
                   {isAuth?(
                   <>
                     <Route path="/inbox/" element={<Inbox/>}/>
                     <Route path="/inbox/:conv_id" element={<Inbox/>}/>
-                    <Route path="/automate" element={<Automate/>}/>
+                    <Route path="/integrate/" element={<Integrate/>}/>
+                    <Route path="/integrate/:integration" element={<IntegrationDetailPage/>}/>
                   </>
                   ):(
                    <>

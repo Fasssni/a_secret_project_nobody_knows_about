@@ -1,12 +1,32 @@
 .my_menu_main{ 
-   
-    width:40%;;
+    width:70%;
+    height:2rem;
+    display:flex;
+    justify-content: start ;
+    align-items: center;
+    column-gap: 1rem;
+    padding: 16px 20px;
+    color: var(--Black-50, #53545C);
+    cursor: pointer;
+ 
+
 
 }
 .menu_li{
-    font-size: 1.2rem;
+    
+    text-align: center;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
 }
 
 .menu_li:hover{
-    color:#5871EB;
+    
+}
+
+.my_menu_main svg{
+   
+    width: 20px;
+    height: 20px;
 }
