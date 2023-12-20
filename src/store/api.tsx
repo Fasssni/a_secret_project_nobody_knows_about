@@ -33,7 +33,7 @@ type ChildreType={
 
 }
 
-type MessageProps={ 
+export type MessageProps={ 
     user_id:number,
     text:string,
     name:string,

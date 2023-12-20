@@ -1,22 +1,24 @@
 import "../../main.css"
 import { ConversationProps, useStoreContext } from "../../store/api";
-import { useEffect, useState,FormEvent, useMemo} from "react";
+import { useEffect, useState,FormEvent, useMemo, useRef} from "react";
 import cl from  "./Chat.module.css"
 import { DetailsPanel } from "../DetailsPanel/DetailsPanel";
 import { ChatBar } from "../ChatBar/ChatBar";
 import { TelegramSvg } from "../../utils/svg";
 import { ChatForm } from "../ChatForm/ChatForm";
+import { MessageContainer } from "../MessageContainer/MessageContainer";
 
 type ChatType={ 
   convId?:string,
   convInfo?:ConversationProps
 }
 export const Chat=({convId,convInfo}:ChatType)=>{ 
-    const {sendMessage, chat, getUserChat, conversations} =  useStoreContext()
+    const {sendMessage, chat, getUserChat, conversations, user} =  useStoreContext()
      
     const [text, setText]=useState<string>("")
     const chatInfo:ConversationProps[]|undefined=conversations?.filter(item=>item.id===parseInt(convId!))
-    
+
+    const scrollRef=useRef<HTMLElement|null>(null)
     
     const handleMessage=async (e:FormEvent<HTMLFormElement>)=>{ 
         e.preventDefault()
@@ -37,6 +39,7 @@ export const Chat=({convId,convInfo}:ChatType)=>{
   const ChannelIcon=convInfo&&channels[convInfo.channel] 
    
    useEffect(() => {
+      
       if(!convId)return 
       const socket=getUserChat(parseInt(convId,10))
    
@@ -48,7 +51,8 @@ export const Chat=({convId,convInfo}:ChatType)=>{
                  
     }, [convId]);
 
-    console.log("Chat rerendered")
+  
+    console.log(chat)
 
      
 
@@ -59,28 +63,22 @@ export const Chat=({convId,convInfo}:ChatType)=>{
                 <>
                 
                 <div className={cl.chat_window}>
-                  <ChatBar client_name={convInfo?.client_name}
+                  <ChatBar 
                            ChannelIcon={ChannelIcon}
                            convId={convId}
+                           {...convInfo!}
                            />
                   <div className={cl.conv_items}>
                       {chat?.map((message, index) => (
-                        <div  key={index} className={cl.message_main}>
-                          <div className={cl.message_content}>
-                            <h3>{message.name}</h3>
-                            <p>{message.text}</p>
-                          </div>
-                          <p className={cl.message_date}>{message.createdAt.slice(0, 10)}</p>
-                        </div>
+                          <MessageContainer message={message}
+                                            name={user?.name}/>
                       ))}
+                      <div ref={scrollRef}></div>
                   </div>
                    <ChatForm chatInfo={chatInfo} 
                              convId={convId}
                    />
                   </div>
-                     <DetailsPanel convInfo={convInfo}
-                                   ChannelIcon={ChannelIcon}
-                                   />
                     </>
                       :
                       <h3>No messages yet..</h3>

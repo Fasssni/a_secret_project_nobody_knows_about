@@ -1,15 +1,16 @@
 import { useNavigate } from "react-router-dom"
-import { useStoreContext } from "../../store/api"
+import { ConversationProps, useStoreContext } from "../../store/api"
 import { useUIContext } from "../../store/uiContext"
 import cl from "./ChatBar.module.css"
 
 type ChatBarType={
-    client_name?:string, 
     ChannelIcon?:React.FC, 
     convId: string,
-}
+}&ConversationProps
 
-export const ChatBar=({client_name,ChannelIcon,convId}:ChatBarType)=>{ 
+
+
+export const ChatBar=({client_name,ChannelIcon,convId,bot_name}:ChatBarType)=>{ 
     const {chatModal, handleChatModal, closeChatModal}=useUIContext()
     const {clearChat, removeChat}=useStoreContext()
     const navigate=useNavigate()
@@ -22,9 +23,13 @@ export const ChatBar=({client_name,ChannelIcon,convId}:ChatBarType)=>{
     }
     return <div className={cl.chatbar_container}>
             <div className={cl.chatbar_main}>
-                    {ChannelIcon&&<ChannelIcon/>}
+                <div className={cl.chatbar_title}>
                     <h4>{client_name}</h4>
-            </div>
+                    <div style={{display:"flex"}}>
+                        {ChannelIcon&&<ChannelIcon/>}
+                        <p className={cl.bot_name}>{bot_name}</p>
+                    </div>
+                </div>
             <div className={cl.more_button}>
                 <svg width="32" 
                      height="32" 
@@ -41,6 +46,7 @@ export const ChatBar=({client_name,ChannelIcon,convId}:ChatBarType)=>{
                             <circle cx="16" cy="16.5" r="1.5" fill="#8191a5">
                             </circle>
                 </svg>
+             </div>
                 {chatModal&&
                 <div className={cl.chat_modal}>
                     <button className={cl.chat_modal_button}
