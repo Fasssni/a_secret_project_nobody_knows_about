@@ -1,6 +1,6 @@
 import cl from "./InboxLeft.module.css"
 import { ConversationProps, useStoreContext } from "../../store/api";
-import { useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import { ConvBox } from "../ConvBox/ConvBox";
 import { Route } from "react-router-dom";
 import { Searcher } from "../../utils/svg";
@@ -9,7 +9,7 @@ type InboxLeftProps ={
   getConversationInfo: (item: ConversationProps) => void;
 }
 
-export const InboxLeft=({getConversationInfo}:InboxLeftProps)=>{
+export const InboxLeft=memo(({getConversationInfo}:InboxLeftProps)=>{
 
     const {conversations,getConversations}=useStoreContext()
 
@@ -44,3 +44,4 @@ export const InboxLeft=({getConversationInfo}:InboxLeftProps)=>{
              </div>
            </div>
 }
+)

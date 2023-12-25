@@ -230,7 +230,7 @@ const getConversations=()=>{
             switch(message.method){ 
                 case "conversations":
                     setConversations(message.conversations)
-                    console.log("conversations", conversations)
+                    console.log("conversations RERENDERED", conversations)
                     break
                 case "new-conversation":
                     setConversations((prevConversations) => [...prevConversations!, message.message])

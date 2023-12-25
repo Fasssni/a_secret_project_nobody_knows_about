@@ -25,3 +25,10 @@ export const Searcher=()=> <svg width="20" height="21" viewBox="0 0 20 21" fill=
                             <circle  stroke="#53545C" stroke-width="1.5" stroke-linecap="round" s/>
                             <path d="M15.0156 15.9043L17.9523 18.8334" stroke="#53545C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
+
+export const EmptyMessageIcon=()=> <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 52 52" fill="none">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M43.6784 43.6747C36.038 51.3159 24.7244 52.9667 15.466 48.685C14.0993 48.1348 12.9787 47.69 11.9134 47.69C8.94622 47.7076 5.25291 50.5847 3.3334 48.6675C1.41388 46.7477 4.29316 43.0515 4.29316 40.0664C4.29316 39.001 3.86604 37.9004 3.31581 36.531C-0.967923 27.2741 0.685272 15.9567 8.32565 8.31802C18.079 -1.43892 33.925 -1.43892 43.6784 8.3155C53.4493 18.0875 53.4317 33.9202 43.6784 43.6747Z" fill="#BEC0CA" stroke="#8B8D97" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M35.8481 27.0322H35.8706" stroke="#8B8D97" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M25.8257 27.0322H25.8482" stroke="#8B8D97" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M15.8032 27.0322H15.8257" stroke="#8B8D97" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                  </svg>
