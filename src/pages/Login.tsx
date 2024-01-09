@@ -6,8 +6,11 @@ import { LogingProps,  useStoreContext } from "../store/api"
 type LoginPropertyProps="email"|"password"
 
 export const Login=()=>{ 
-    const {login, checkAuth,error}=useStoreContext()
+    const {login, checkAuth}=useStoreContext()
+
     const [showPassword, setShowPassword]=useState(false)
+    const [error,setError]=useState<string>()
+    const [isRedForm, setIsRedForm]=useState<boolean>(false)
     
     const [creds, setCreds]=useState<LogingProps>({email:"",password:""})
 
@@ -19,23 +22,27 @@ export const Login=()=>{
     }
 
     const loginHandler= async (e:MouseEvent<HTMLButtonElement>)=>{ 
-         e.preventDefault()
-         
-         await login(creds)
-         setCreds({...creds, email:"",password:""})
-         if(!error){ 
-            navigate("/") 
+ 
+        try{ 
+            e.preventDefault()
+            await login(creds)
+            setCreds({...creds, email:"",password:""})
+            navigate("/")    
+        }catch(e){ 
+             setError(e?.response?.data.error)
+             setIsRedForm(()=> true)
+             const errorTimer=setTimeout(()=>{ 
+                setIsRedForm(()=>false)
+             },1900)
+
+             
         }
-        console.log(error)
-
         
-        
-
     }
     
     return <div className="login_main">
                 <form className="signup_form">
-                    {error&&<p style={{color:"red"}}>{error?.response?.data}</p>}
+                    {error&&<p style={{color:"red"}}>{error}</p>}
                     <div className="greeting">
                         <h2 className="greeting_title">Welcome Back  👋</h2>
                         <p className="greeting_description">We are happy to have you back</p>
@@ -45,6 +52,10 @@ export const Login=()=>{
                            type="email"
                            onChange={(e)=>onChangeHandler(e,"email")}
                            value={creds.email}
+                           style={{ 
+                                border:isRedForm?"1px solid red":"none",
+                                transition:"1s ease"
+                           }}
                            />
                     <div className="password">
                         <input placeholder= "Enter password"
@@ -52,6 +63,10 @@ export const Login=()=>{
                                type={showPassword?"text":"password"}
                                onChange={(e)=>onChangeHandler(e,"password")}
                                value={creds.password}
+                               style={{ 
+                                border:isRedForm?"1px solid red":"none", 
+                                transition:"1s ease"
+                           }}
                                />
                         <div className="show_password" onClick={()=>setShowPassword((prev)=>!prev)}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

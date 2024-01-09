@@ -1,10 +1,23 @@
 import { useEffect, useState } from "react"
 import "../main.css"
 
+import axios from "axios"
+
 export const HomePage=()=>{ 
     const [seconds, setSeconds]=useState<number>(0)
 
-    console.log("rerendered!!!!!")
+    const args:number[]= [4,5 ,6, 7]
+ 
+    function test(...args){
+
+        console.log(JSON.stringify(args))
+    }
+   
+    test(1,3 ,4, 5)
+
+    const test2= {1: "wWFWFWF"}
+
+    console.log(JSON.stringify(test2))
    
     return <>
                 <div className="home_left">
@@ -21,3 +34,4 @@ export const HomePage=()=>{
             </div>
           </>
 }
+

@@ -10,28 +10,110 @@ export const Signup=()=>{
     const navigate=useNavigate()
 
     const [user, setUser]=useState<signupProps>({name:"",surname:"", email:"", password:""})
+    const [error, setError]=useState<string>()
+    const [isRedForm, setIsRedForm]=useState<boolean>(false)
+    const [validationErrors, setValidationErros]=useState({name:"",surname:"", email:"", password:""})
     
     const onChangeHandler=(event:ChangeEvent<HTMLInputElement>,property:PropertyProps)=>{ 
         
-        setUser({...user,[property]:event.target.value})
+        setUser((prevUser)=>({...prevUser,[property]:event.target.value}))
 
 
     }
+    const validateEmail = () => {
+        if(!(user.email.includes("@")&&user.email.includes("."))){
+            !validationErrors.email&&
+            setValidationErros((prevErrors)=>({...prevErrors, email:"the email is invalid"}))
+            setTimeout(()=>{
+                setValidationErros((prevErrors)=>({...prevErrors, email:""}))
+            },1900)
+            return false
+        }
+        return true
+      };
+
+      const validatePassword= () => {
+        if(user.password.length<3){
+            !validationErrors.password&&
+            setValidationErros((prevErrors)=>({...prevErrors, password:"the password is too short"}))
+            setTimeout(()=>{
+                setValidationErros((prevErrors)=>({...prevErrors, password:""}))
+            },1900)
+            return false
+        }
+        return true
+      };
+
+      const validateName= () => {
+        if(user.name.length<2){
+            !validationErrors.name&&
+            setValidationErros((prevErrors)=>({...prevErrors, name:"the name is too short"}))
+            setTimeout(()=>{
+                setValidationErros((prevErrors)=>({...prevErrors, name:""}))
+            },1900)
+            return false
+        }
+        return true
+      };
+
+      const validateSurName= () => {
+        if(user.surname.length<2){
+            !validationErrors.surname&&
+            setValidationErros((prevErrors)=>({...prevErrors, surname:"the surname is too short"}))
+            return false
+        }
+        setTimeout(()=>{
+            setValidationErros((prevErrors)=>({...prevErrors, surname:""}))
+        },1900)
+        return true
+      };
 
     const signupHandler=async(e:ChangeEvent<HTMLButtonElement>)=>{ 
-        e.preventDefault()
-        console.log("1 worked")
-        const res= await signup({user})
-        console.log(res)
-        setUser({name:"",surname:"", email:"", password:""})
+        let isValid=function(){
+            return(
+                validateEmail()&&
+                validateName()&&
+                validatePassword()&&
+                validateSurName()
+            )
+            
+        }()
+
+        if(isValid){
+        try{ 
+            e.preventDefault()
+            const res= await signup({user})
+            console.log(res)
+            setUser({name:"",surname:"", email:"", password:""})
+            navigate('/login')
+        }catch(e:any){ 
+            console.log(e)
+            setError(e?.response?.data.error)
+            setIsRedForm(()=> true)
+             const errorTimer=setTimeout(()=>{ 
+                setIsRedForm(()=>false)
+             },1900)
+        }}
     }
 
-    useEffect(()=> { 
-        console.log(user)
-    },[user])
+    const validStyle={
+        color:"red", 
+        position:"absolute"
+    }
+
+    const ErrorComponent=()=>{ 
+        return <div>
+                {error&&<p style={{color:"red"}}>{error}</p>}
+                {validationErrors.name&&<p style={{color:"red"}}>{validationErrors.name}</p>}
+                {validationErrors.surname&&<p style={{color:"red"}}>{validationErrors.surname}</p>}
+                {validationErrors.email&&<p style={{color:"red"}}>{validationErrors.email}</p>}
+                {validationErrors.password&&<p style={{color:"red"}}>{validationErrors.password}</p>}
+              </div>
+    }
 
     return <div className="login_main">
                 <form className="signup_form">
+                    <ErrorComponent/>
                     <div className="greeting">
                         <h2 className="greeting_title">Create an account👋</h2>
                         <p className="greeting_description">Kindly fill in details to create an account</p>
@@ -41,11 +123,13 @@ export const Signup=()=>{
                               onChange={(e)=>onChangeHandler(e,"name")} 
                               className="name_field"
                               value={user.name}
+                              onBlur={validateName}
                               />
                        <input placeholder="Enter your surname" 
                               onChange={(e)=>onChangeHandler(e,"surname")} 
                               className="name_field" 
                               value={user.surname}
+                              onBlur={validateSurName}
                               />
                     </div>
                     <input placeholder= "Enter email address" 
@@ -53,6 +137,11 @@ export const Signup=()=>{
                            className="credentials" 
                            type="email"
                            value={user.email}
+                           onBlur={validateEmail}
+                           style={{ 
+                            border:isRedForm?"1px solid red":"none", 
+                            transition:"1s ease"
+                       }}
                            />
                     <div className="password">
                        <input placeholder= "Create a password" 
@@ -60,6 +149,7 @@ export const Signup=()=>{
                               type={showPassword?"text":"password"} 
                               onChange={(e)=>onChangeHandler(e,"password")}
                               value={user.password}
+                              onBlur={validatePassword}
                               />
                        <div className="show_password" 
                             onClick={()=>setShowPassword((prev)=>!prev)}
@@ -78,3 +168,4 @@ export const Signup=()=>{
                 <h2 className="login_logo" onClick={()=>navigate("/")}>Quarter</h2>
            </div>
 }
+

@@ -71,7 +71,7 @@ export type connectedChannelsType={
 
 type StoreContextProps={ 
     login:({email,password}:LogingProps)=>string|Promise<void>, 
-    signup:({user}:UserType)=>void, 
+    signup:({user}:UserType)=>string|Promise<void>, 
     checkAuth:()=>void,
     logout:()=>void,
     isAuth:boolean,
@@ -84,7 +84,7 @@ type StoreContextProps={
     conversations:ConversationProps[]|undefined,
     chat:MessageProps[]|undefined,
     getUserChat:(id:number)=>{close:()=>void}|undefined,
-    createTgBot:(token:string)=>void,
+    createTgBot:(token:string)=>Promise<any>,
     error:any,
     clearChat:(conv_id:string)=>void,
     removeChat:(conv_id:string)=>void,
@@ -114,12 +114,13 @@ const [chat, setChat]=useState<MessageProps[]>()
 
 
 
-const signup= async ({user}:UserType)=>{ 
+const signup=async({user}:UserType)=>{ 
 try{ 
-    await axios.post(`${path}/signup`, user)
+    const res= await axios.post(`${path}/signup`, user,  {withCredentials:true})
+    console.log(res)
     return "Вы успешно зарегистрированы"
   }catch(err){
-        console.log(err)
+        throw err
   }
 }
  
@@ -133,8 +134,7 @@ try{
         setUser(response.data.user)
         setIsAuth(true)
     }catch(err:any){ 
-         console.log(err)
-         setError(err)
+        throw err
     }finally{
         setIsLoading(false)
     }
@@ -295,9 +295,9 @@ const getUserChat=(id:number)=>{
 const createTgBot=async (token:string)=>{
     try{
         const response= await axios.post(`${msgURL}/createbot?user_id=${user?.id}`,{token})
-        console.log(response.data)
+        return response.data
     }catch(e){
-        console.log(e)
+        throw e
     }
 }
 
