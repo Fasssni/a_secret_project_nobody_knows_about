@@ -47,10 +47,7 @@
     
 }
 
-.namer{
-    width:80%;
-    font-size:4rem;
-}
+
 
 .userAccount{ 
      position:relative;
@@ -79,25 +76,8 @@
 }
 
 
-.home_left{
-    height:90vh;
-    width:50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: start;
-    padding-left:4.5rem;
-    row-gap: 1.5rem;
-    
-}
 
 
-
-.description{
-    font-size: 1rem;
-    font-weight: 400;
-    width:85%;
-}
 
 .buttons{
     display:flex;

@@ -81,20 +81,20 @@ export const Navbar=()=>{
             </div>
                         :
             <div className={cl.right_side}>
-                            <ol className={cl.list_group}>
+                            {/* <ol className={cl.list_group}>
                                {navEls.map((el)=><li key={el.id}
                                                      onClick={()=>navigate(el.link)}
                                                      >
                                                      {el.title}
                                                  </li>)}
-                            </ol>
+                            </ol> */}
                             {/* <div className="buttons">
                                  <button className={cl.profile_icon}></button>
                                  <button className="btn_right" onClick={()=>logout()}>Log out</button>
                             </div> */}
                             <div className="buttons">
-                                <button className="btn_left"  onClick={()=>navigate("/login")} >Login</button>
-                                <button className="btn_right" onClick={()=>navigate("/signup")}>Sign up</button>
+                                <button className={cl.btn_left}  onClick={()=>navigate("/login")} >Login</button>
+                                <button className={cl.btn_right} onClick={()=>navigate("/signup")}>Sign up</button>
                             </div>
             </div>}
             </>}

@@ -9,20 +9,23 @@ export const Home=()=>{
     const {isAuth, user}=useStoreContext()
     
 
-    return(
-        
-    <div className="home">
-    {isAuth
-        ?
+    return( 
+    <>
+     {isAuth
+            ?
+      <div className="home">
+   
         <div className="userAccount">
             <h3>{user?.name}</h3>
             <h3>{user?.surname}</h3>
             <p>{user?.email}</p>
 
         </div>
+     </div>
         : <HomePage/>
           
         }
-     </div>
+    </>
+     
     )
 }

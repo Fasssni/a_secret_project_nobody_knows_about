@@ -61,6 +61,22 @@ li{
     font-size:0.9rem;
 
 }
+
+
+.btn_left{ 
+    background-color: black;
+    border:none;
+    color:white;
+    padding:1rem;
+}
+
+.btn_right{ 
+    background-color: white ;
+    border:1.5px solid black;
+    color:black;
+    padding:1rem;
+}
+
 @media screen and (max-width:784px) {
     .list_group{
         display:none;
