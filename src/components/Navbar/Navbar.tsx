@@ -1,33 +1,33 @@
 import { useEffect, useState } from "react"
-import { Signup } from "../../pages/Signup"
+
 import { useStoreContext } from "../../store/api"
 import cl from "./Navbar.module.css"
 import {useNavigate, useLocation} from "react-router-dom"
-import { NavBurger } from "../NavBurger/NavBurger"
+
 import { MyAccountUI } from "../MyAccountUI/MyAccount"
 
 export const Navbar=()=>{ 
 
-    const navEls=[
-        {   id:0,
-            title:"CRM",
-            link:'/'
-        },
-        {   id:1,
-            title: "AI-agent",
-            link:'/'
-        },
-        {   id:2,
-            title:"Integrarions", 
-            link:"/integrate"
-        },
-    ]
+    // const navEls=[
+    //     {   id:0,
+    //         title:"CRM",
+    //         link:'/'
+    //     },
+    //     {   id:1,
+    //         title: "AI-agent",
+    //         link:'/'
+    //     },
+    //     {   id:2,
+    //         title:"Integrarions", 
+    //         link:"/integrate"
+    //     },
+    // ]
 
     const navigate=useNavigate()
     const location=useLocation()
     const lp=location.pathname
 
-    const {isAuth, logout}=useStoreContext()
+    const {isAuth}=useStoreContext()
 
     const  [windowDimensions, setDim]=useState({ 
         width:window.innerWidth, 

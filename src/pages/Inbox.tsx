@@ -1,17 +1,17 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { Chat } from "../components/Chat/Chat";
 import { InboxLeft } from "../components/InboxLeft/InboxLeft";
-import { ConversationProps, useStoreContext } from "../store/api";
-import { useEffect, useState } from "react";
+import { ConversationProps } from "../store/api";
+import {useState } from "react";
 
 export const Inbox = () => {
   
   const {conv_id}=useParams()
   const [convInfo, setConvInfo]=useState<ConversationProps>()
-  const navigate=useNavigate()
+
   
   const getCoversationInfo=(item:ConversationProps)=>{ 
-        setConvInfo((prev)=>item)
+        setConvInfo(()=>item)
   }
 
  

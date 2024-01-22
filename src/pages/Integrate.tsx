@@ -7,7 +7,7 @@ import { ConnectedChannels } from "../components/ConnectedChannels/ConnectedChan
 
 export const Integrate=()=>{
     
-    const [token,setToken]=useState<string>("")
+
     const navigate=useNavigate()
   
     const onClickHandler=(link:string)=>{ 

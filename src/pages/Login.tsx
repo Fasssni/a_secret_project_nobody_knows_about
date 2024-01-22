@@ -6,7 +6,7 @@ import { LogingProps,  useStoreContext } from "../store/api"
 type LoginPropertyProps="email"|"password"
 
 export const Login=()=>{ 
-    const {login, checkAuth}=useStoreContext()
+    const {login}=useStoreContext()
 
     const [showPassword, setShowPassword]=useState(false)
     const [error,setError]=useState<string>()
@@ -31,7 +31,7 @@ export const Login=()=>{
         }catch(e){ 
              setError(e?.response?.data.error)
              setIsRedForm(()=> true)
-             const errorTimer=setTimeout(()=>{ 
+             setTimeout(()=>{ 
                 setIsRedForm(()=>false)
              },1900)
 

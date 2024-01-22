@@ -12,9 +12,6 @@ type ConvBoxProps={
 }
 export const ConvBox=memo(({item,getConversationInfo}:ConvBoxProps)=>{ 
   
-    console.log("Rerendered")
-    const {getUserChat}=useStoreContext()
-   
     const [randomColor, setRandomColor] = useState('');
     const {conv_id}=useParams()
     

@@ -1,9 +1,7 @@
 import cl from "./InboxLeft.module.css"
 import { ConversationProps, useStoreContext } from "../../store/api";
-import { memo, useEffect, useMemo, useState } from "react";
+import { memo, useEffect } from "react";
 import { ConvBox } from "../ConvBox/ConvBox";
-import { Route } from "react-router-dom";
-import { Searcher } from "../../utils/svg";
 
 type InboxLeftProps ={
   getConversationInfo: (item: ConversationProps) => void;

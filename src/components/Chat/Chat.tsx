@@ -1,8 +1,7 @@
 import "../../main.css"
 import { ConversationProps, useStoreContext } from "../../store/api";
-import { useEffect, useState,FormEvent, useMemo, useRef} from "react";
+import { useEffect, useState,FormEvent, useRef} from "react";
 import cl from  "./Chat.module.css"
-import { DetailsPanel } from "../DetailsPanel/DetailsPanel";
 import { ChatBar } from "../ChatBar/ChatBar";
 import { EmptyMessageIcon, TelegramSvg } from "../../utils/svg";
 import { ChatForm } from "../ChatForm/ChatForm";
@@ -20,14 +19,7 @@ export const Chat=({convId,convInfo}:ChatType)=>{
 
     const scrollRef=useRef<HTMLElement|null>(null)
     
-    const handleMessage=async (e:FormEvent<HTMLFormElement>)=>{ 
-        e.preventDefault()
-        if(typeof convId===undefined) return
-        if(chatInfo){
-            await sendMessage(text,parseInt(convId!,10),chatInfo[0].to_id)
-            setText("")
-        }
-    }
+   
     
     const channels:Record<string, React.FC>={ 
       telegram:()=>TelegramSvg
@@ -68,11 +60,11 @@ export const Chat=({convId,convInfo}:ChatType)=>{
                            {...convInfo!}
                            />
                     <div className={cl.conv_items}>
-                        {chat?.map((message, index) => (
+                        {chat?.map((message) => (
                             <MessageContainer message={message}
                                               name={user?.name}/>
                         ))}
-                        <div ref={scrollRef}></div>
+                       
                     </div>
                     <ChatForm chatInfo={chatInfo} 
                               convId={convId}

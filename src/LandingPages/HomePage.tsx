@@ -60,7 +60,7 @@ export const HomePage=()=>{
                       </div>
                     <h3 style={{fontSize:"1.5rem",marginTop:"2rem"}}>Have all of you messangers at one place</h3>
                     <div className={cl.socials}>
-                          {socials. map((item,index)=>{
+                          {socials. map((item)=>{
                             return <div className={cl.socials_container}>
                                         <img src={item.imageUrl} alt="" />
                                     </div>

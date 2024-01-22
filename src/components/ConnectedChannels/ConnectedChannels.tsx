@@ -1,11 +1,11 @@
 import { connectedChannelsType, useStoreContext } from "../../store/api"
 import cl from "./ConnectChannels.module.css"
-import {createContext, useContext, useState, useEffect} from "react"
+import { useState, useEffect} from "react"
 import { ArrowSvg } from "../../utils/svg"
 
 export const ConnectedChannels=()=>{ 
 
-    const {getChannels, removeChannel}=useStoreContext()
+    const {getChannels}=useStoreContext()
     const [channels,setChannels]=useState<connectedChannelsType[]>()
     const [modal, setModal]=useState<boolean>(false)
     const [channelModal, setChannelModal]=useState<boolean>(false)
@@ -13,11 +13,11 @@ export const ConnectedChannels=()=>{
     
 
     const handleModalClose=()=>{ 
-        setChannelModal((prev)=>false)
+        setChannelModal(()=>false)
     }
 
     const handleModalOpen=(item:connectedChannelsType)=>{ 
-        setChannelModal((prev)=>true)
+        setChannelModal(()=>true)
         setClickedChannel(item)
     }
      
@@ -93,13 +93,13 @@ const ChannelDetails=({
          const res=await removeChannel(id)
          if(res.status===200){ 
             setStatus("The channel has successfully been deleted")
-            const timer= setTimeout(()=>{ 
+            setTimeout(()=>{ 
                 handleModalClose()
             },3000)
             removeChannelState(id)
          }else{
             setStatus(res.message)
-            const timer= setTimeout(()=>{ 
+            setTimeout(()=>{ 
                 handleModalClose()
             },3000)
          }

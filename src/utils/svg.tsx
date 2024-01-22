@@ -22,7 +22,7 @@ export const IntegrateSVG=()=> <svg xmlns="http://www.w3.org/2000/svg" width="22
                               </svg>
 
 export const Searcher=()=> <svg width="20" height="21" viewBox="0 0 20 21" fill="#000000" xmlns="http://www.w3.org/2000/svg">
-                            <circle  stroke="#53545C" stroke-width="1.5" stroke-linecap="round" s/>
+                            <circle  stroke="#53545C" stroke-width="1.5" stroke-linecap="round" />
                             <path d="M15.0156 15.9043L17.9523 18.8334" stroke="#53545C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
 

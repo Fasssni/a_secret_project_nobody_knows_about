@@ -1,8 +1,8 @@
-import React, { JSXElementConstructor, useEffect, useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import cl from './MyMenu.module.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {memo} from "react"
-import { InboxSVG } from '../../utils/svg';
+
 import { useUIContext } from '../../store/uiContext';
 
 type MyMenuProps = {

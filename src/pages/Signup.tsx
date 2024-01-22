@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useEffect} from "react"
+import { useState, ChangeEvent} from "react"
 import { useNavigate } from "react-router-dom"
 import "../main.css"
 import { signupProps, useStoreContext } from "../store/api"
@@ -90,16 +90,13 @@ export const Signup=()=>{
             console.log(e)
             setError(e?.response?.data.error)
             setIsRedForm(()=> true)
-             const errorTimer=setTimeout(()=>{ 
+            setTimeout(()=>{ 
                 setIsRedForm(()=>false)
              },1900)
         }}
     }
 
-    const validStyle={
-        color:"red", 
-        position:"absolute"
-    }
+
 
     const ErrorComponent=()=>{ 
         return <div>

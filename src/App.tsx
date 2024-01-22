@@ -1,4 +1,4 @@
-import { useState, useEffect} from 'react'
+import { useEffect} from 'react'
 import {Routes, Route} from 'react-router-dom'
 import { Home } from './pages/Home'
 import { Navbar } from './components/Navbar/Navbar'
@@ -11,7 +11,7 @@ import { useUIContext } from './store/uiContext'
 import { Inbox } from './pages/Inbox'
 import { Integrate } from './pages/Integrate'
 import { IntegrationDetailPage } from './pages/IntegrationDetailPage'
-import { Automate } from './pages/Automate'
+
 
 
 

@@ -1,5 +1,4 @@
 import { ConversationProps } from "../../store/api"
-import { TelegramSvg } from "../../utils/svg"
 import cl from "./DetailsPanel.module.css"
 
 type PanelType={

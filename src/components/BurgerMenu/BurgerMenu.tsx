@@ -1,11 +1,11 @@
-import React, { useState, MouseEvent, useEffect } from 'react';
+import React, { MouseEvent, useEffect } from 'react';
 import cl from './BurgerMenu.module.css';
 import { useUIContext } from '../../store/uiContext';
 import  {menuels as Elements} from '../../utils/menuels.tsx';
 import { MyMenu } from '../MenuUI/MyMenu';
 
 
-export const BurgerMenu: React.FC<BurgerMenuProps> = () => {
+export const BurgerMenu = () => {
   const { width, setWidth } = useUIContext();
 
   const handleResize = (event: MouseEvent<HTMLDivElement>) => {

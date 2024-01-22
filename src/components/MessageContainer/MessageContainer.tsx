@@ -53,7 +53,7 @@ type EndMessageProps={
 
 }&MessageProps
 
-const UserMessage=({name, text, createdAt,time, date}:EndMessageProps)=>{ 
+const UserMessage=({text,time }:EndMessageProps)=>{ 
 
     return <div className={cl.message_container}>
             <div className={cl.usermessage}>
