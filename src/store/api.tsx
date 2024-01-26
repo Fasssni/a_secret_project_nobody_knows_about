@@ -91,8 +91,8 @@ export const useStoreContext=()=>useContext(StoreContext)
 
 export const StoreContextProvider=({children}:ChildreType)=>{ 
      
-const path="http://localhost:5000/apiv"
-const msgURL="http://localhost:5000/tg"
+const path="https://prjct-i82f3ovq2-fasssni.vercel.app/apiv"
+const msgURL="https://prjct-i82f3ovq2-fasssni.vercel.app/tg"
 
 const [isAuth, setIsAuth]=useState<boolean>(false)
 const [isLoading, setIsLoading]=useState<boolean>(false)
