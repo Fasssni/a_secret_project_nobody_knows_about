@@ -3,6 +3,7 @@ import {useState, ChangeEvent, MouseEvent} from "react"
 import { useNavigate } from "react-router-dom"
 import { LogingProps,  useStoreContext } from "../store/api"
 
+
 type LoginPropertyProps="email"|"password"
 
 export const Login=()=>{ 
@@ -28,8 +29,8 @@ export const Login=()=>{
             await login(creds)
             setCreds({...creds, email:"",password:""})
             navigate("/")    
-        }catch(e){ 
-             setError(e?.response?.data.error)
+        }catch(err: any|unknown){ 
+             setError(err?.response?.data.error)
              setIsRedForm(()=> true)
              setTimeout(()=>{ 
                 setIsRedForm(()=>false)

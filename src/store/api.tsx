@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from "axios"
+import axios, { AxiosResponse } from "axios"
 import {createContext, useContext, useState, useEffect} from "react"
 
 
@@ -52,25 +52,16 @@ export type ConversationProps={
     channel: string
 }
 
-type ChatProps={ 
-    messages:MessageProps[],
-    convInfo:ConversationProps
-}
-
-interface WebSocketMessage {
-    type: string;
-    data: any;
-  }
 
 export type connectedChannelsType={
-    name: string,
-    id: number,
-    channel:string
+    name?: string,
+    id?: number,
+    channel?:string
 }
 
 type StoreContextProps={ 
     login:({email,password}:LogingProps)=>string|Promise<void>, 
-    signup:({user}:UserType)=>string|Promise<void>, 
+    signup:({user}:UserType)=>Promise<string>, 
     checkAuth:()=>void,
     logout:()=>void,
     isAuth:boolean,
@@ -84,7 +75,6 @@ type StoreContextProps={
     chat:MessageProps[]|undefined,
     getUserChat:(id:number)=>{close:()=>void}|undefined,
     createTgBot:(token:string)=>Promise<any>,
-    error:any,
     clearChat:(conv_id:string)=>void,
     removeChat:(conv_id:string)=>void,
     
@@ -123,7 +113,7 @@ try{
   }
 }
  
- const [error, setError]=useState<any>()
+ 
 
  const login=async({email, password}:LogingProps)=>{
     try{
@@ -169,7 +159,7 @@ try{
 const logout= async ()=>{ 
     try{ 
        setIsLoading(true)
-       const res= await axios.post(`${path}/logout`, {},{withCredentials:true})
+       await axios.post(`${path}/logout`, {},{withCredentials:true})
        await checkAuth()
     }catch(e){
         console.log(e)
@@ -338,7 +328,7 @@ const removeChannel=async(id:number)=>{
         const response = await axios.delete(`${msgURL}/deletebot?id=${id}`)
         console.log("DELETE RESPONSE", response)
         return response
-    }catch (e: AxiosError<unknown>) {
+    }catch (e: unknown|any) {
         console.log(e);
         return e as AxiosResponse;
       }
@@ -373,7 +363,6 @@ useEffect(()=>{
                             chat,
                             getUserChat,
                             createTgBot,
-                            error, 
                             clearChat,
                             removeChat,
                             

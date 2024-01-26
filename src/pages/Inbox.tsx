@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Chat } from "../components/Chat/Chat";
 import { InboxLeft } from "../components/InboxLeft/InboxLeft";
 import { ConversationProps } from "../store/api";

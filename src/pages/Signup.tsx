@@ -68,7 +68,7 @@ export const Signup=()=>{
         return true
       };
 
-    const signupHandler=async(e:ChangeEvent<HTMLButtonElement>)=>{ 
+    const signupHandler=async(e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{ 
         let isValid=function(){
             return(
                 validateEmail()&&

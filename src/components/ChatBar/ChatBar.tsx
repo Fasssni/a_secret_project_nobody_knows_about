@@ -3,6 +3,7 @@ import { ConversationProps, useStoreContext } from "../../store/api"
 import { useUIContext } from "../../store/uiContext"
 import cl from "./ChatBar.module.css"
 
+
 type ChatBarType={
     ChannelIcon?:React.FC, 
     convId: string,
@@ -37,7 +38,7 @@ export const ChatBar=({client_name,ChannelIcon,convId,bot_name}:ChatBarType)=>{
                      fill="none" 
                      xmlns="http://www.w3.org/2000/svg" 
                      color="#8191a5"
-                     onClick={(e)=>handleChatModal(e)}
+                     onClick={(e:React.MouseEvent<SVGSVGElement, MouseEvent>)=>handleChatModal(e)}
                      >
                             <circle cx="11.5" cy="16.5" r="1.5" fill="#8191a5">
                             </circle>

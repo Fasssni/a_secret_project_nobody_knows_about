@@ -1,4 +1,4 @@
-import { ConversationProps, useStoreContext } from "../../store/api"
+import { ConversationProps } from "../../store/api"
 import cl from "./ConvBox.module.css"
 import styled from 'styled-components';
 import { memo, useState, useEffect} from "react";

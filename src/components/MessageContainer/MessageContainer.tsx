@@ -6,6 +6,8 @@ type MessageType={
     message:MessageProps, 
     name?: string
 }
+
+
 export const MessageContainer=({message,name}:MessageType)=>{ 
     const [isUser, setIsUser]=useState<boolean>()
 
@@ -16,10 +18,10 @@ export const MessageContainer=({message,name}:MessageType)=>{
       
       const dateTime = new Date(message.createdAt);
 
-      const options = { year: 'numeric', month: 'long', day: 'numeric' }
+      const options:Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' }
       const formattedDate = dateTime.toLocaleDateString(undefined, options)
 
-      const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: true };
+      const timeOptions: Intl.DateTimeFormatOptions= { hour: '2-digit', minute: '2-digit', hour12: true };
       const formattedTime = dateTime.toLocaleTimeString(undefined, timeOptions);
   
       
@@ -63,7 +65,7 @@ const UserMessage=({text,time }:EndMessageProps)=>{
           </div>
 }
 
-const CustomerMessage=({name, text, createdAt,time, date}:EndMessageProps)=>{ 
+const CustomerMessage=({ text, time}:EndMessageProps)=>{ 
    
     return <div className={cl.message_container}>
             <div className={cl.customermessage}>

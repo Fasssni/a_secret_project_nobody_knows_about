@@ -1,6 +1,6 @@
 import "../../main.css"
 import { ConversationProps, useStoreContext } from "../../store/api";
-import { useEffect, useState,FormEvent, useRef} from "react";
+import { useEffect} from "react";
 import cl from  "./Chat.module.css"
 import { ChatBar } from "../ChatBar/ChatBar";
 import { EmptyMessageIcon, TelegramSvg } from "../../utils/svg";
@@ -12,12 +12,12 @@ type ChatType={
   convInfo?:ConversationProps
 }
 export const Chat=({convId,convInfo}:ChatType)=>{ 
-    const {sendMessage, chat, getUserChat, conversations, user} =  useStoreContext()
+    const { chat, getUserChat, conversations, user} =  useStoreContext()
      
-    const [text, setText]=useState<string>("")
+ 
     const chatInfo:ConversationProps[]|undefined=conversations?.filter(item=>item.id===parseInt(convId!))
 
-    const scrollRef=useRef<HTMLElement|null>(null)
+
     
    
     

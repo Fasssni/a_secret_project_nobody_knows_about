@@ -4,7 +4,7 @@ type uiContextProps={
    width:string,
    setWidth: Dispatch<React.SetStateAction<string>>
    chatModal:boolean,
-   handleChatModal:(e:Event)=>void,
+   handleChatModal:(e:React.MouseEvent<SVGSVGElement, MouseEvent>)=>void,
    closeChatModal:()=>void,
 
 }
@@ -21,14 +21,14 @@ export const UiContextProvider=({children}:ChildrenType)=>{
    }); // Initial width
    const [chatModal, setChatModal]=useState<boolean>(false)
 
-   const handleChatModal=(e:Event)=>{ 
-      e.stopPropagation()
+   const handleChatModal=(e:React.MouseEvent<SVGSVGElement, MouseEvent>)=>{ 
+      e.stopPropagation();
       setChatModal(prev=>!prev)
     
    }
    const closeChatModal=()=>{ 
     
-    setChatModal(prev=>false)
+    setChatModal(()=>false)
   
  }
    return <uiContext.Provider value={{

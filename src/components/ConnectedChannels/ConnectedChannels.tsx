@@ -90,13 +90,13 @@ const ChannelDetails=({
     const deleteChannel=async ()=>{ 
         console.log(id)
         try{
-         const res=await removeChannel(id)
+         const res=await removeChannel(id!)
          if(res.status===200){ 
             setStatus("The channel has successfully been deleted")
             setTimeout(()=>{ 
                 handleModalClose()
             },3000)
-            removeChannelState(id)
+            removeChannelState(id!)
          }else{
             setStatus(res.message)
             setTimeout(()=>{ 

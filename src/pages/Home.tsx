@@ -1,8 +1,7 @@
 import { HomePage } from "../LandingPages/HomePage"
 import "../main.css"
 import { useStoreContext } from "../store/api"
-import { useUIContext } from "../store/uiContext"
-import {useState, useEffect} from "react"
+
 
 export const Home=()=>{
 

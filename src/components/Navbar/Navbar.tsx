@@ -35,7 +35,7 @@ export const Navbar=()=>{
     const [isBurger, setIsBurger]=useState<boolean>(false)
     const [myAccountModal, setMyAccountModal]=useState<boolean>(false)
 
-    const handleMyAccountModal=(e:MouseEvent)=>{ 
+    const handleMyAccountModal=(e:React.MouseEvent<HTMLDivElement, MouseEvent>)=>{ 
         e.stopPropagation()
         setMyAccountModal(prev=>!prev)
     }

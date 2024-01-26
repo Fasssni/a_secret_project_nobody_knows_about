@@ -1,4 +1,4 @@
-import React, { MouseEvent, useEffect } from 'react';
+import  { useEffect } from 'react';
 import cl from './BurgerMenu.module.css';
 import { useUIContext } from '../../store/uiContext';
 import  {menuels as Elements} from '../../utils/menuels.tsx';
@@ -8,7 +8,8 @@ import { MyMenu } from '../MenuUI/MyMenu';
 export const BurgerMenu = () => {
   const { width, setWidth } = useUIContext();
 
-  const handleResize = (event: MouseEvent<HTMLDivElement>) => {
+  const handleResize = (event: globalThis.MouseEvent) => {
+
     if (event.clientX <= 270&&event.clientX>=55) {
       setWidth(`${event.clientX}px`);
     }
@@ -19,7 +20,7 @@ export const BurgerMenu = () => {
     window.addEventListener('mouseup', stopResize);
   };
 
-  const stopResize = () => {
+  const stopResize = () => { 
     window.removeEventListener('mousemove', handleResize);
     window.removeEventListener('mouseup', stopResize);
   };
