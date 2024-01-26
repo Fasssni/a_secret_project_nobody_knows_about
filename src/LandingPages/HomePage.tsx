@@ -28,7 +28,7 @@ export const HomePage=()=>{
                 { id: 10, name: 'Nova' },
               ]
    
-    return <div>
+    return <div className={cl.main_container}>
             <main className={cl.home_unauth}>
                   <div className={cl.top_calltoaction}>
                     <h1 className={cl.namer}>

@@ -1,3 +1,8 @@
+.main_container{ 
+    width:100%; 
+    height:auto;
+}
+
 .namer{
     width:80%;
     font-size:4rem;
@@ -236,6 +241,10 @@
 .banner {
     text-align: center;
     padding: 20px;
+    width:100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    
 
   }
   
@@ -244,7 +253,7 @@
     overflow: hidden;
     white-space: nowrap;
     gap:3rem;
-  
+   
  
   }
   
