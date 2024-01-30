@@ -91,8 +91,9 @@ export const useStoreContext=()=>useContext(StoreContext)
 
 export const StoreContextProvider=({children}:ChildreType)=>{ 
      
-const path="https://prjct-i82f3ovq2-fasssni.vercel.app/apiv"
-const msgURL="https://prjct-i82f3ovq2-fasssni.vercel.app/tg"
+const path=import.meta.env.VITE_API_PATH_URL
+const msgURL=import.meta.env.VITE_API_MESSAGE_URL
+
 
 const [isAuth, setIsAuth]=useState<boolean>(false)
 const [isLoading, setIsLoading]=useState<boolean>(false)
