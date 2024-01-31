@@ -205,7 +205,7 @@ const getMessages=async()=>{
 
 const getConversations=()=>{ 
     try {
-        const socket=new WebSocket("wss://quarter-spid.onrender.com/")
+        const socket=new WebSocket("wss://quarter-spid.onrender.com")
          socket.onopen=()=>{
             const data={ 
                 method:"conversations",
@@ -243,7 +243,7 @@ const getUserChat=(id:number)=>{
     console.log("the functions has been called")
     try{ 
        
-        const socket=new WebSocket(`wss://quarter-spid.onrender.com/`)
+        const socket=new WebSocket(`wss://quarter-spid.onrender.com`)
         socket.onopen=()=>{ 
             const data={ 
                 method:"chat-connection", 
