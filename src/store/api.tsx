@@ -205,7 +205,7 @@ const getMessages=async()=>{
 
 const getConversations=()=>{ 
     try {
-        const socket=new WebSocket("ws://quarter-spid.onrender.com/")
+        const socket=new WebSocket("wss://quarter-spid.onrender.com/")
          socket.onopen=()=>{
             const data={ 
                 method:"conversations",
@@ -243,7 +243,7 @@ const getUserChat=(id:number)=>{
     console.log("the functions has been called")
     try{ 
        
-        const socket=new WebSocket(`ws://quarter-spid.onrender.com/`)
+        const socket=new WebSocket(`wss://quarter-spid.onrender.com/`)
         socket.onopen=()=>{ 
             const data={ 
                 method:"chat-connection", 
@@ -264,7 +264,6 @@ const getUserChat=(id:number)=>{
                     setChat(messages.messageData)
                     break
                 case "message":
-                    
                     if(id===messages.message.conversation_id){
                     setChat((prev)=>[...prev!,messages.message])
                     }
