@@ -34,6 +34,9 @@
     
 }
 
+@media all and (max-width:1000px) {
+   
+}
 .home{ 
     height: 110vh;
     position: relative;

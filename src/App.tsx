@@ -1,4 +1,4 @@
-import { useEffect} from 'react'
+import { useEffect, useState} from 'react'
 import {Routes, Route} from 'react-router-dom'
 import { Home } from './pages/Home'
 import { Navbar } from './components/Navbar/Navbar'
@@ -26,6 +26,8 @@ function App() {
   const {checkAuth, isAuth,isLoading}=useStoreContext()
   const {width,closeChatModal, chatModal}=useUIContext()
   
+  const [shouldRender, setShouldRender]=useState<boolean>(false)
+  
   const appClickHandler=()=>{
     if(chatModal){
       closeChatModal()
@@ -42,16 +44,18 @@ function App() {
   
 },[])
 
+
+
  
   return <div className="App" 
               onClick={appClickHandler}>
-            {isAuth &&
-            <BurgerMenu/>
-            }
+            {isAuth && <BurgerMenu/>}
             <Navbar/>
-            <div style={{
-                marginLeft:isAuth?width:0
-            }}
+            <div 
+                 style={{
+                    marginLeft:isAuth?width:0
+               }}
+                
             >
               <Routes>
                   <Route path="/" element={<Home/>}/>

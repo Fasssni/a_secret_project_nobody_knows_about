@@ -93,6 +93,7 @@ export const StoreContextProvider=({children}:ChildreType)=>{
      
 const path=import.meta.env.VITE_API_PATH_URL
 const msgURL=import.meta.env.VITE_API_MESSAGE_URL
+const wssURL=import.meta.env.VITE_API_WSS
 
 
 const [isAuth, setIsAuth]=useState<boolean>(false)
@@ -205,7 +206,7 @@ const getMessages=async()=>{
 
 const getConversations=()=>{ 
     try {
-        const socket=new WebSocket("wss://quarter-spid.onrender.com")
+        const socket=new WebSocket(wssURL)
          socket.onopen=()=>{
             const data={ 
                 method:"conversations",
@@ -240,10 +241,9 @@ const getConversations=()=>{
 
 
 const getUserChat=(id:number)=>{ 
-    console.log("the functions has been called")
     try{ 
        
-        const socket=new WebSocket(`wss://quarter-spid.onrender.com`)
+        const socket=new WebSocket(wssURL)
         socket.onopen=()=>{ 
             const data={ 
                 method:"chat-connection", 

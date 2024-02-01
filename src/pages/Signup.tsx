@@ -161,7 +161,7 @@ export const Signup=()=>{
                         <p className="redirect_text">Already have an account?</p>
                         <a className="redirect_link" href="/login">login</a>
                     </div>
-                </form>
+                </form> 
                 <h2 className="login_logo" onClick={()=>navigate("/")}>Quarter</h2>
            </div>
 }
