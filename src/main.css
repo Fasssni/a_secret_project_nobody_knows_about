@@ -257,6 +257,7 @@ button{
 @media all and (max-width:1000px){
     .signup_form{ 
         width:100%;
+        margin-top:0;
     }
 }
 
