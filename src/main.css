@@ -245,14 +245,19 @@ button{
 }
 
 .greeting{ 
-    position: absolute;
+    position: relative;
    
     font-family: Poppins;
-    top:20%;
-    left:30%;
     display: flex;
     flex-direction: column;
     align-items: start;
+    width:80%;
+}
+
+@media all and (max-width:1000px){
+    .signup_form{ 
+        width:100%;
+    }
 }
 
 .greeting_title{ 
