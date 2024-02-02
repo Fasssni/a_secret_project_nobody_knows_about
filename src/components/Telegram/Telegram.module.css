@@ -1,32 +1,107 @@
-.tg_main{
-    position: relative;
-    width:100%;
-    display:flex;
-    justify-content: start;
-    flex-direction: column;
-    align-items: center;
+.tg_main {
+  position: relative;
+  width: 80%;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: start;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  border-radius: 15px;
+  padding-top: 1rem;
 }
-.bot_data{ 
-    margin-top: 1rem;
-    display:flex;
-    flex-direction: column;
-    row-gap: 1rem;
-    width:45%;
-    
+.bot_data {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  width: 45%;
 }
-.bot_credentials{ 
-    width:100%;
-    height: 2rem;
-    border:none;
-    border-bottom:1px solid black;
-    padding-left:0.5rem;
+.bot_credentials {
+  width: 100%;
+  height: 2rem;
+  border: none;
+  border-bottom: 1px solid black;
+  padding-left: 0.5rem;
 }
-.submit_btn{ 
-    border:none;
-    height:2.5rem;
-    cursor: pointer;
-    background-color: #5871EB;
-    color:white;
-    border-radius: 5px;
+.submit_btn {
+  border: none;
+  height: 2.5rem;
+  cursor: pointer;
+  background-color: #5871eb;
+  color: white;
+  border-radius: 5px;
+}
 
+.bot_description {
+  color: #8191a5;
+  font-size: 13px;
+}
+
+.bot_desc_ol {
+  width: 40vw;
+}
+
+.bot_desc_li {
+  font-size: inherit;
+  outline: none;
+  padding-left: 10px;
+}
+
+.bot_desc_li a {
+  font-size: 14px;
+  font-weight: 1000;
+  font-family: "Lato", sans-serif;
+  color: #5871eb;
+}
+
+.bot_desc_li p {
+  font-size: 14px;
+  font-weight: 1000;
+  font-family: "Lato", sans-serif;
+  color: #5871eb;
+}
+
+.modal_main {
+  top: 0;
+  left: 0;
+  position: fixed;
+  z-index: 99999;
+  width: 100%;
+  height: 110vh;
+  background-color: rgba(158, 158, 160, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal_container {
+  position: relative;
+  width: 50vw;
+  height: 30vh;
+  background-color: white;
+  border-radius: 12px;
+  padding: 5px 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal_container p {
+  color: #8191a5;
+  font-size: 16px;
+  text-align: left;
+}
+
+.modal_container p a {
+  font-size: 16px;
+  font-weight: 1000;
+  font-family: "Lato", sans-serif;
+  color: #5871eb;
+  cursor: pointer;
+}
+
+.modal_container p span {
+  color: #5871eb;
 }

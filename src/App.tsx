@@ -26,6 +26,12 @@ function App() {
     checkAuth();
   }, []);
 
+  console.log("THE APP IS RENDERED");
+
+  useEffect(() => {
+    console.log("The width has changed");
+  });
+
   return (
     <div className="App" onClick={appClickHandler}>
       {isAuth && <BurgerMenu />}

@@ -1,24 +1,35 @@
-import { useParams } from "react-router-dom";
 import { Chat } from "../components/Chat/Chat";
 import { InboxLeft } from "../components/InboxLeft/InboxLeft";
-import { ConversationProps } from "../store/api";
-import {useState } from "react";
+import { ConversationProps, useStoreContext } from "../store/api";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export const Inbox = () => {
-  
-  const {conv_id}=useParams()
-  const [convInfo, setConvInfo]=useState<ConversationProps>()
+  const [convInfo, setConvInfo] = useState<ConversationProps>();
+  const { conversations, getConversations } = useStoreContext();
 
-  
-  const getCoversationInfo=(item:ConversationProps)=>{ 
-        setConvInfo(()=>item)
-  }
+  const renderRef = useRef(0);
 
- 
+  const getCoversationInfo = useCallback((item: ConversationProps) => {
+    setConvInfo(() => item);
+  }, []);
+
+  useEffect(() => {
+    const socket = getConversations();
+    console.log("INBOX USEFFECT WORKED");
+    return () => {
+      socket?.close();
+      console.log("conversation socket is closed");
+    };
+  }, []);
+  renderRef.current = renderRef.current + 1;
+  console.log("INBOX RERENDERED", renderRef?.current);
   return (
     <div className="inbox_main">
-      <InboxLeft  getConversationInfo={getCoversationInfo}/>
-      <Chat convId={conv_id} convInfo={convInfo}/>
+      <InboxLeft
+        getConversationInfo={getCoversationInfo}
+        conversations={conversations}
+      />
+      <Chat convInfo={convInfo} />
     </div>
   );
 };

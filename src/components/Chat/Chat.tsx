@@ -1,98 +1,84 @@
-import "../../main.css"
+import "../../main.css";
 import { ConversationProps, useStoreContext } from "../../store/api";
-import { useEffect} from "react";
-import cl from  "./Chat.module.css"
+import { useEffect } from "react";
+import cl from "./Chat.module.css";
 import { ChatBar } from "../ChatBar/ChatBar";
 import { EmptyMessageIcon, TelegramSvg } from "../../utils/svg";
 import { ChatForm } from "../ChatForm/ChatForm";
 import { MessageContainer } from "../MessageContainer/MessageContainer";
+import { useParams } from "react-router-dom";
 
-type ChatType={ 
-  convId?:string,
-  convInfo?:ConversationProps
-}
-export const Chat=({convId,convInfo}:ChatType)=>{ 
-    const { chat, getUserChat, conversations, user} =  useStoreContext()
-     
- 
-    const chatInfo:ConversationProps[]|undefined=conversations?.filter(item=>item.id===parseInt(convId!))
+type ChatType = {
+  convInfo?: ConversationProps;
+};
+export const Chat = ({ convInfo }: ChatType) => {
+  const { chat, getUserChat, conversations, user } = useStoreContext();
+  const { conv_id } = useParams();
+  const convId = conv_id;
 
+  const chatInfo: ConversationProps[] | undefined = conversations?.filter(
+    (item) => item.id === parseInt(convId!)
+  );
 
-    
-   
-    
-    const channels:Record<string, React.FC>={ 
-      telegram:()=>TelegramSvg
-      
-          
-  }
+  const channels: Record<string, React.FC> = {
+    telegram: () => TelegramSvg,
+  };
 
+  const ChannelIcon = convInfo && channels[convInfo.channel];
 
-  const ChannelIcon=convInfo&&channels[convInfo.channel] 
-   
-   useEffect(() => {
-      
-      if(!convId)return 
-      const socket=getUserChat(parseInt(convId,10))
-   
-   
-      return ()=>{
-        socket?.close()
-        console.log("the connection is closed")
-      }
-                 
-    }, [convId]);
+  useEffect(() => {
+    if (!convId) return;
+    const socket = getUserChat(parseInt(convId, 10));
 
-  
-    console.log(chat)
+    return () => {
+      socket?.close();
+      console.log("the connection is closed");
+    };
+  }, [convId]);
 
-     
+  return (
+    <div className={`${cl.chat_container} ${!convId && cl.mob}`}>
+      <div className={cl.chat_main}>
+        {convId ? (
+          <>
+            <div className={cl.chat_window}>
+              <ChatBar
+                ChannelIcon={ChannelIcon}
+                convId={convId}
+                {...convInfo!}
+              />
+              <div className={cl.conv_items}>
+                {chat?.map((message, index) => (
+                  <MessageContainer
+                    message={message}
+                    name={user?.name}
+                    key={index}
+                  />
+                ))}
+              </div>
+              <ChatForm chatInfo={chatInfo} convId={convId} />
+            </div>
+          </>
+        ) : (
+          <EmptyMessage />
+        )}
+      </div>
+    </div>
+  );
+};
 
-    return(
-            <div className={cl.chat_container}>
-              <div className={cl.chat_main}>
-              {convId?
-                <>
-                <div className={cl.chat_window}>
-                  <ChatBar 
-                           ChannelIcon={ChannelIcon}
-                           convId={convId}
-                           {...convInfo!}
-                           />
-                    <div className={cl.conv_items}>
-                        {chat?.map((message) => (
-                            <MessageContainer message={message}
-                                              name={user?.name}/>
-                        ))}
-                       
-                    </div>
-                    <ChatForm chatInfo={chatInfo} 
-                              convId={convId}
-                    />
-                    </div>
-                  </>
-                      :
-                      <EmptyMessage/>
-                      }
-                  </div>
-                </div> 
-  )
-}
-
-const EmptyMessage=()=>{ 
-    return <div className={cl.empty_message}>
-                <div className={cl.empty_message_container}>
-                  <div className={cl.empty_message_icon}>
-                    <EmptyMessageIcon/>
-                  </div>
-                  <div className={cl.empty_message_text}>
-                     <h3 className={cl.em_title}>
-                      Messages
-                     </h3>
-                     <p className={cl.em_desc}>
-                      Click on a contact to view messages.
-                     </p>
-                  </div>
-                </div>
-          </div>
-}
+const EmptyMessage = () => {
+  return (
+    <div className={cl.empty_message}>
+      <div className={cl.empty_message_container}>
+        <div className={cl.empty_message_icon}>
+          <EmptyMessageIcon />
+        </div>
+        <div className={cl.empty_message_text}>
+          <h3 className={cl.em_title}>Messages</h3>
+          <p className={cl.em_desc}>Click on a contact to view messages.</p>
+        </div>
+      </div>
+    </div>
+  );
+};
