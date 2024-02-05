@@ -92,7 +92,6 @@ const ScrollReplaceTitles = () => {
     const handleScroll = () => {
       if (titlesRef.current) {
         const rect = titlesRef.current.getBoundingClientRect();
-        // Adjust the threshold as needed
         const threshold = window.innerHeight / 2.2;
 
         setReplaceTitles(rect.top < threshold);
@@ -101,7 +100,6 @@ const ScrollReplaceTitles = () => {
 
     window.addEventListener("scroll", handleScroll);
 
-    // Cleanup the event listener on component unmount
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
@@ -161,8 +159,6 @@ const CompanyBanner = ({ companies }: CompanyType) => {
       }
     };
   }, []);
-
-  console.log(Array.isArray(companies));
 
   return (
     <div className={cl.banner} ref={bannerRef}>

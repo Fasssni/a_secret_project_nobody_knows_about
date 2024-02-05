@@ -25,7 +25,6 @@ export const UiContextProvider = ({ children }: ChildrenType) => {
     setChatModal(() => false);
   };
 
-  console.log(width, "WIDTH IN THE STORE");
   return (
     <uiContext.Provider
       value={{

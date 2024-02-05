@@ -33,8 +33,6 @@ export const MyMenu = memo(
       setIslocate(() => pathname.slice(0, link.length) === link);
     }, [pathname]);
 
-    console.log(width);
-
     return (
       <>
         {isMobile ? (

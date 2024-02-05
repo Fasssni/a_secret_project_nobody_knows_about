@@ -96,7 +96,7 @@ export const StoreContextProvider = ({ children }: ChildreType) => {
       const res = await axios.post(`${path}/signup`, user, {
         withCredentials: true,
       });
-      console.log(res);
+
       return "Вы успешно зарегистрированы";
     } catch (err) {
       throw err;
@@ -111,7 +111,7 @@ export const StoreContextProvider = ({ children }: ChildreType) => {
         { email, password },
         { withCredentials: true }
       );
-      console.log(response);
+
       setUser(response.data.user);
       setIsAuth(true);
     } catch (err: any) {
@@ -127,11 +127,10 @@ export const StoreContextProvider = ({ children }: ChildreType) => {
       const response = await axios.get(`${path}/checkauth`, {
         withCredentials: true,
       });
-      console.log(response.data, "status");
+
       if (response.status === 201) {
         setIsAuth(true);
         setUser(response.data);
-        console.log(response);
       }
     } catch (e: any) {
       console.log(e);
@@ -189,27 +188,19 @@ export const StoreContextProvider = ({ children }: ChildreType) => {
           user_id: user?.id,
         };
         socket.send(JSON.stringify(data));
-        console.log("conversation socket is open");
       };
       socket.onmessage = (event) => {
         const message = JSON.parse(event.data);
-        console.log(message);
         switch (message.method) {
           case "conversations":
             setConversations(message.conversations);
-            console.log("conversations RERENDERED", conversations);
             break;
           case "new-conversation":
             setConversations((prevConversations) => [
               ...prevConversations!,
               message.message,
             ]);
-            console.log(
-              "new conversation",
-              conversations,
-              "here",
-              message.message
-            );
+
             break;
         }
       };
@@ -286,7 +277,7 @@ export const StoreContextProvider = ({ children }: ChildreType) => {
   const removeChat = async (conv_id: string) => {
     try {
       const res = await axios.delete(`${msgURL}/removechat?conv_id=${conv_id}`);
-      console.log(res);
+
       if (res) {
         getConversations();
       }
@@ -307,7 +298,7 @@ export const StoreContextProvider = ({ children }: ChildreType) => {
   const removeChannel = async (id: number) => {
     try {
       const response = await axios.delete(`${msgURL}/deletebot?id=${id}`);
-      console.log("DELETE RESPONSE", response);
+
       return response;
     } catch (e: unknown | any) {
       console.log(e);
@@ -315,13 +306,7 @@ export const StoreContextProvider = ({ children }: ChildreType) => {
     }
   };
 
-  useEffect(() => {
-    console.log("CONVERSATIONS", conversations);
-  }, [conversations]);
-
-  useEffect(() => {
-    console.log(user, "USER");
-  }, [user]);
+  useEffect(() => {}, [user]);
   return (
     <StoreContext.Provider
       value={{
