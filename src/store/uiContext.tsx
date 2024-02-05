@@ -14,10 +14,7 @@ const uiContext = createContext({} as uiContextProps);
 export const useUIContext = () => useContext(uiContext);
 
 export const UiContextProvider = ({ children }: ChildrenType) => {
-  const [width, setWidth] = useState<string>(() => {
-    const storedWidth = localStorage.getItem("barWidth");
-    return storedWidth || "25%";
-  }); // Initial width
+  const [width, setWidth] = useState<string>("194px"); // Initial width
   const [chatModal, setChatModal] = useState<boolean>(false);
 
   const handleChatModal = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
@@ -27,6 +24,8 @@ export const UiContextProvider = ({ children }: ChildrenType) => {
   const closeChatModal = () => {
     setChatModal(() => false);
   };
+
+  console.log(width, "WIDTH IN THE STORE");
   return (
     <uiContext.Provider
       value={{

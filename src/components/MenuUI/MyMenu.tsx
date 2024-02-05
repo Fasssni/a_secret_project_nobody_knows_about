@@ -19,7 +19,6 @@ export const MyMenu = memo(
     const { pathname } = useLocation();
 
     const { width } = useUIContext();
-    let wd = parseInt(width);
 
     const [isLocate, setIslocate] = useState<boolean>();
 
@@ -33,6 +32,8 @@ export const MyMenu = memo(
     useEffect(() => {
       setIslocate(() => pathname.slice(0, link.length) === link);
     }, [pathname]);
+
+    console.log(width);
 
     return (
       <>
@@ -52,7 +53,7 @@ export const MyMenu = memo(
             onClick={() => navigate(`${link}`)}
           >
             <Icon />
-            {wd > 180 && (
+            {parseInt(width) > 180 && (
               <li
                 className={cl.menu_li}
                 style={{

@@ -38,7 +38,7 @@ export const BurgerMenu = () => {
           setWidth(() => "0px");
         } else {
           const val = localStorage.getItem("barWidth");
-          setWidth(() => `${val}`);
+          setWidth(() => val || "195px");
         }
         return x;
       });
@@ -50,7 +50,6 @@ export const BurgerMenu = () => {
     return () => window.removeEventListener("resize", handleWidthSize);
   }, []);
 
-  console.log(parseInt("25%"));
   return (
     <>
       {isAdapt ? (
@@ -58,7 +57,7 @@ export const BurgerMenu = () => {
       ) : (
         <div
           className={cl.burgermenu_main}
-          style={{ width: typeof width === "string" ? width : "195px" }}
+          style={{ width: typeof width === "string" ? width : "194px" }}
           onMouseDown={startResize}
         >
           <ol className={cl.menu_ol}>
