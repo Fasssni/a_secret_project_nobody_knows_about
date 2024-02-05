@@ -1,56 +1,62 @@
-.inboxleft_main{ 
-    
-    width:30%;
-    height:80vh;
-    margin-left:1rem;
-    margin-top:1rem;
-    border-radius: 12px;
-    background-color: white;
-    display: flex;
-    padding: 22px 24px;
-    flex-direction: column;
-    align-items: flex-start;
-  
-  
-    align-self: stretch;
+.inboxleft_main {
+  position: relative;
+  width: 30%;
+  height: 80vh;
+  margin-left: 1rem;
+  margin-top: 1rem;
+  border-radius: 12px;
+  background-color: white;
+  display: flex;
+  padding: 22px 24px;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
 }
 
-.label{
-    color: var(--Black-90, #2C2D33);
-   
-    font-family: Poppins;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
+.label {
+  color: var(--Black-90, #2c2d33);
+
+  font-family: Poppins;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 }
-.searchinput{ 
-    display: flex;
-    width:80%;
-    height: 30px;
-    padding: 8px 16px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    border-radius: 8px;
-    border: 1px solid var(--Black-1, #CFD3D4);
+.searchinput {
+  display: flex;
+  width: 80%;
+  height: 30px;
+  padding: 8px 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--Black-1, #cfd3d4);
 }
-.conv_input{ 
-    display: flex;
-    width: 90%;
-    height: 45px;
-    padding: 8px 16px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    border-radius: 8px;
-    border: 1px solid var(--Black-1, #CFD3D4);
-    outline: none;
-    border: none;
+.conv_input {
+  display: flex;
+  width: 90%;
+  height: 45px;
+  padding: 8px 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--Black-1, #cfd3d4);
+  outline: none;
+  border: none;
 }
-.inbox_conversations{
-    
-    width:100%;
-    height:auto;
-   
+.inbox_conversations {
+  width: 100%;
+  height: auto;
+}
+
+@media all and (max-width: 800px) {
+  .inboxleft_main {
+    width: 100%;
+    margin-right: 1rem;
+  }
+  .inboxleft_main.mobile {
+    display: none;
+  }
 }

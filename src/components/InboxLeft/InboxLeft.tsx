@@ -2,6 +2,7 @@ import cl from "./InboxLeft.module.css";
 import { ConversationProps } from "../../store/api";
 import { memo } from "react";
 import { ConvBox } from "../ConvBox/ConvBox";
+import { useParams } from "react-router-dom";
 
 type InboxLeftProps = {
   getConversationInfo: (item: ConversationProps) => void;
@@ -10,10 +11,10 @@ type InboxLeftProps = {
 
 export const InboxLeft = memo(
   ({ getConversationInfo, conversations }: InboxLeftProps) => {
-    console.log(conversations, "Gegg");
+    const { conv_id } = useParams();
 
     return (
-      <div className={cl.inboxleft_main}>
+      <div className={`${cl.inboxleft_main} ${conv_id && cl.mobile}`}>
         <h3 className={cl.label}>Contacts</h3>
         <div className={cl.searchinput}>
           <input className={cl.conv_input} placeholder="Search"></input>
@@ -25,6 +26,7 @@ export const InboxLeft = memo(
                 item={item}
                 getConversationInfo={getConversationInfo}
                 key={index}
+                conv_id={conv_id}
               />
             );
           })}

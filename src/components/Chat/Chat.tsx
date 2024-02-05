@@ -3,10 +3,10 @@ import { ConversationProps, useStoreContext } from "../../store/api";
 import { useEffect } from "react";
 import cl from "./Chat.module.css";
 import { ChatBar } from "../ChatBar/ChatBar";
-import { EmptyMessageIcon, TelegramSvg } from "../../utils/svg";
+import { ArrowBack, EmptyMessageIcon, TelegramSvg } from "../../utils/svg";
 import { ChatForm } from "../ChatForm/ChatForm";
 import { MessageContainer } from "../MessageContainer/MessageContainer";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 type ChatType = {
   convInfo?: ConversationProps;
@@ -15,6 +15,7 @@ export const Chat = ({ convInfo }: ChatType) => {
   const { chat, getUserChat, conversations, user } = useStoreContext();
   const { conv_id } = useParams();
   const convId = conv_id;
+  const navigate = useNavigate();
 
   const chatInfo: ConversationProps[] | undefined = conversations?.filter(
     (item) => item.id === parseInt(convId!)
@@ -42,6 +43,9 @@ export const Chat = ({ convInfo }: ChatType) => {
         {convId ? (
           <>
             <div className={cl.chat_window}>
+              <div className={cl.link_back} onClick={() => navigate("/inbox")}>
+                <ArrowBack />
+              </div>
               <ChatBar
                 ChannelIcon={ChannelIcon}
                 convId={convId}
@@ -55,6 +59,7 @@ export const Chat = ({ convInfo }: ChatType) => {
                     key={index}
                   />
                 ))}
+                <div className={cl.full}></div>
               </div>
               <ChatForm chatInfo={chatInfo} convId={convId} />
             </div>

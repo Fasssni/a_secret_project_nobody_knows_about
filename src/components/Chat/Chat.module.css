@@ -21,8 +21,6 @@
 
 .chat_window {
   width: 100%;
-
-  min-height: 55vh;
   display: flex;
   flex-direction: column;
 }
@@ -34,8 +32,7 @@
 
 .conv_items {
   width: 100%;
-  max-height: 50vh;
-
+  height: 50vh;
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -45,12 +42,9 @@
   border-top-left-radius: 0;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
-
   padding: 1rem 1rem;
   font-size: 0.9rem;
-
   overflow-y: auto;
-  min-height: 0px;
   box-sizing: border-box;
 }
 
@@ -110,8 +104,27 @@
   line-height: normal;
 }
 
+.link_back {
+  display: none;
+}
+
+.full {
+  flex: 1;
+}
 @media all and (max-width: 800px) {
-  .mob {
+  .chat_container {
+    width: 100%;
+  }
+  .chat_container.mob {
     display: none;
+  }
+
+  .link_back {
+    display: flex;
+    width: 100%;
+    background-color: white;
+    height: 2rem;
+    align-items: center;
+    cursor: pointer;
   }
 }
