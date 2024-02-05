@@ -93,7 +93,7 @@ export const StoreContextProvider = ({ children }: ChildreType) => {
 
   const signup = async ({ user }: UserType) => {
     try {
-      const res = await axios.post(`${path}/signup`, user, {
+      await axios.post(`${path}/signup`, user, {
         withCredentials: true,
       });
 
