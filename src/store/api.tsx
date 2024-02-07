@@ -78,6 +78,8 @@ type StoreContextProps = {
 
   getChannels: () => Promise<any> | undefined;
   removeChannel: (id: number) => Promise<any> | undefined;
+
+  isWsConnected: boolean;
 };
 
 const StoreContext = createContext({} as StoreContextProps);
@@ -198,6 +200,7 @@ export const StoreContextProvider = ({ children }: ChildreType) => {
 
     socket.onerror = async (err) => {
       console.log(err);
+      setIsWsConnected(false);
       await handleConversations();
     };
     socket.onmessage = (event) => {
@@ -363,6 +366,8 @@ export const StoreContextProvider = ({ children }: ChildreType) => {
 
         getChannels,
         removeChannel,
+
+        isWsConnected,
       }}
     >
       {children}

@@ -376,3 +376,38 @@ button {
   background-color: white;
   border-radius: 12px;
 }
+
+.wsfailed_main {
+  position: absolute;
+  bottom: 5%;
+  width: 40vw;
+  height: 17vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  padding: 5px 15px;
+  font-size: 0.9rem;
+  gap: 0.5rem;
+
+  box-shadow: 10px 5px 5px rgb(120, 118, 118);
+  color: rgb(120, 118, 118);
+  background-color: white;
+  left: 0;
+}
+
+.wsfailed_title {
+  color: black;
+  margin-top: 0.5rem;
+}
+
+.wsfailed_btn {
+  border: none;
+  background-color: transparent;
+  margin-top: 0.7rem;
+}
+
+@media all and (max-width: 1000px) {
+  .wsfailed_main {
+    font-size: 0.7rem;
+  }
+}
