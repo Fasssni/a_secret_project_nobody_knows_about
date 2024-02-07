@@ -1,5 +1,9 @@
 import "../../main.css";
-import { ConversationProps, useStoreContext } from "../../store/api";
+import {
+  ConversationProps,
+  SocketResponseType,
+  useStoreContext,
+} from "../../store/api";
 import { useEffect } from "react";
 import cl from "./Chat.module.css";
 import { ChatBar } from "../ChatBar/ChatBar";
@@ -28,11 +32,16 @@ export const Chat = ({ convInfo }: ChatType) => {
   const ChannelIcon = convInfo && channels[convInfo.channel];
 
   useEffect(() => {
+    let socket: SocketResponseType | null = null;
+    async function runWS(convId: string) {
+      socket = await getUserChat(parseInt(convId, 10));
+    }
+
     if (!convId) return;
-    const socket = getUserChat(parseInt(convId, 10));
+    runWS(convId);
 
     return () => {
-      socket?.close();
+      socket!.close();
       console.log("the connection is closed");
     };
   }, [convId]);

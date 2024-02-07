@@ -1,6 +1,10 @@
 import { Chat } from "../components/Chat/Chat";
 import { InboxLeft } from "../components/InboxLeft/InboxLeft";
-import { ConversationProps, useStoreContext } from "../store/api";
+import {
+  ConversationProps,
+  SocketResponseType,
+  useStoreContext,
+} from "../store/api";
 import { useCallback, useEffect, useState } from "react";
 
 export const Inbox = () => {
@@ -12,11 +16,20 @@ export const Inbox = () => {
   }, []);
 
   useEffect(() => {
-    const socket = getConversations();
+    let socket: SocketResponseType | null = null;
 
+    const connectSocket = async () => {
+      socket = await getConversations();
+    };
+
+    connectSocket();
     return () => {
-      socket?.close();
-      console.log("conversation socket is closed");
+      try {
+        socket!.close();
+        console.log("The socket has been called");
+      } catch (e) {
+        console.log(e);
+      }
     };
   }, []);
 

@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState } from "react";
 
 export type signupProps = {
   name: string;
@@ -53,6 +53,10 @@ export type connectedChannelsType = {
   channel?: string;
 };
 
+export type SocketResponseType = {
+  close: () => void;
+};
+
 type StoreContextProps = {
   login: ({ email, password }: LogingProps) => string | Promise<void>;
   signup: ({ user }: UserType) => Promise<string>;
@@ -64,10 +68,10 @@ type StoreContextProps = {
   getMessages: () => void;
   messages: MessageProps[] | undefined;
   sendMessage: (text: string, convId: number, toId: bigint) => Promise<void>;
-  getConversations: () => { close: () => void } | undefined;
+  getConversations: () => Promise<SocketResponseType>;
   conversations: ConversationProps[] | undefined;
   chat: MessageProps[] | undefined;
-  getUserChat: (id: number) => { close: () => void } | undefined;
+  getUserChat: (id: number) => Promise<SocketResponseType>;
   createTgBot: (token: string) => Promise<any>;
   clearChat: (conv_id: string) => void;
   removeChat: (conv_id: string) => void;
@@ -90,6 +94,7 @@ export const StoreContextProvider = ({ children }: ChildreType) => {
   const [messages, setMessages] = useState<MessageProps[]>();
   const [conversations, setConversations] = useState<ConversationProps[]>([]);
   const [chat, setChat] = useState<MessageProps[]>();
+  const [isWsConnected, setIsWsConnected] = useState<boolean>(true);
 
   const signup = async ({ user }: UserType) => {
     try {
@@ -159,12 +164,14 @@ export const StoreContextProvider = ({ children }: ChildreType) => {
     console.log(user);
 
     try {
-      await axios.post(`${msgURL}/sendmessage?id=${convId}`, {
+      const { data } = await axios.post(`${msgURL}/sendmessage?id=${convId}`, {
         text: text,
         name: user?.name,
         user_id: user?.id,
         to_id: toId,
       });
+
+      !isWsConnected && setChat((prev) => [...prev!, data]);
     } catch (e) {
       console.log(e);
     }
@@ -179,72 +186,99 @@ export const StoreContextProvider = ({ children }: ChildreType) => {
     }
   };
 
-  const getConversations = () => {
-    try {
-      const socket = new WebSocket(wssURL);
-      socket.onopen = () => {
-        const data = {
-          method: "conversations",
-          user_id: user?.id,
-        };
-        socket.send(JSON.stringify(data));
+  const getConversations = async () => {
+    const socket = new WebSocket(wssURL);
+    socket.onopen = () => {
+      const data = {
+        method: "conversations",
+        user_id: user?.id,
       };
-      socket.onmessage = (event) => {
-        const message = JSON.parse(event.data);
-        switch (message.method) {
-          case "conversations":
-            setConversations(message.conversations);
-            break;
-          case "new-conversation":
-            setConversations((prevConversations) => [
-              ...prevConversations!,
-              message.message,
-            ]);
+      socket.send(JSON.stringify(data));
+    };
 
-            break;
-        }
-      };
-      return {
-        close: () => socket.close(),
-      };
-    } catch (e) {
-      console.log(e);
+    socket.onerror = async (err) => {
+      console.log(err);
+      await handleConversations();
+    };
+    socket.onmessage = (event) => {
+      const message = JSON.parse(event.data);
+      switch (message.method) {
+        case "conversations":
+          setConversations(message.conversations);
+          break;
+        case "new-conversation":
+          setConversations((prevConversations) => [
+            ...prevConversations!,
+            message.message,
+          ]);
+
+          break;
+      }
+    };
+    return {
+      close: () => socket.close(),
+    };
+  };
+
+  const handleConversations = async () => {
+    try {
+      const { data } = await axios.get(
+        `${msgURL}/conversations?user_id=${user?.id}`
+      );
+      setConversations(data);
+    } catch (err) {
+      throw err;
     }
   };
 
-  const getUserChat = (id: number) => {
-    try {
-      const socket = new WebSocket(wssURL);
-      socket.onopen = () => {
-        const data = {
-          method: "chat-connection",
-          conversation_id: id,
-          user_id: user?.id,
-        };
-        socket.send(JSON.stringify(data));
-        console.log("the connection is open");
+  const getUserChat = async (id: number) => {
+    const socket = new WebSocket(wssURL);
+    socket.onopen = () => {
+      const data = {
+        method: "chat-connection",
+        conversation_id: id,
+        user_id: user?.id,
       };
-      socket.onmessage = (event) => {
-        const messages = JSON.parse(event.data);
-        console.log(messages);
-        switch (messages.method) {
-          case "chat-connection":
-            console.log(messages, "here");
-            setChat(messages.messageData);
-            break;
-          case "message":
-            if (id === messages.message.conversation_id) {
-              setChat((prev) => [...prev!, messages.message]);
-            }
-            break;
-        }
-      };
+      socket.send(JSON.stringify(data));
+      console.log("the connection is open");
+    };
 
-      return {
-        close: () => socket.close(),
-      };
-    } catch (e) {
-      console.log(e);
+    socket.onerror = async (err) => {
+      console.log(err);
+      setIsWsConnected(false);
+      await handleUserChat(id);
+    };
+
+    socket.onmessage = (event) => {
+      const messages = JSON.parse(event.data);
+      console.log(messages);
+      switch (messages.method) {
+        case "chat-connection":
+          console.log(messages, "here");
+          setChat(messages.messageData);
+          break;
+        case "message":
+          if (id === messages.message.conversation_id) {
+            setChat((prev) => [...prev!, messages.message]);
+          }
+          break;
+      }
+    };
+
+    return {
+      close: () => socket.close(),
+    };
+  };
+
+  const handleUserChat = async (id: number) => {
+    try {
+      const { data } = await axios.get(
+        `${msgURL}/getchat/${id}?user_id=${user?.id}`
+      );
+
+      setChat(data);
+    } catch (err) {
+      throw err;
     }
   };
 
@@ -306,7 +340,6 @@ export const StoreContextProvider = ({ children }: ChildreType) => {
     }
   };
 
-  useEffect(() => {}, [user]);
   return (
     <StoreContext.Provider
       value={{
