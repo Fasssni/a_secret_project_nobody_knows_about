@@ -72,7 +72,7 @@ type StoreContextProps = {
   conversations: ConversationProps[] | undefined;
   chat: MessageProps[] | undefined;
   getUserChat: (id: number) => Promise<SocketResponseType>;
-  createTgBot: (token: string) => Promise<any>;
+  createTgBot: (token: string, greeting: string) => Promise<any>;
   clearChat: (conv_id: string) => void;
   removeChat: (conv_id: string) => void;
 
@@ -285,12 +285,12 @@ export const StoreContextProvider = ({ children }: ChildreType) => {
     }
   };
 
-  const createTgBot = async (token: string) => {
+  const createTgBot = async (token: string, greeting: string) => {
     try {
       setIsLoading(true);
       const { data } = await axios.post(
         `${msgURL}/createbot?user_id=${user?.id}`,
-        { token }
+        { token, greeting }
       );
       return data;
     } catch (e) {

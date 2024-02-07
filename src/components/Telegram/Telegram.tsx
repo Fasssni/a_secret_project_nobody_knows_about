@@ -15,7 +15,10 @@ type ModalProps = {
 
 export const Telegram = () => {
   const { createTgBot } = useStoreContext();
-  const [token, setToken] = useState<string>("");
+  const [token, setToken] = useState<Record<string, string>>({
+    token: "",
+    greeting: "",
+  });
   const [error, setError] = useState<string>("");
   const [botData, setBotData] = useState<BotProps>();
   const [modalOk, setModalOk] = useState<boolean>(false);
@@ -25,10 +28,10 @@ export const Telegram = () => {
   const onSubmitHandler = async (e: FormEvent<HTMLDivElement>) => {
     e.preventDefault();
 
-    if (token.length > 43) {
+    if (token.token.length > 43) {
       try {
-        const response = await createTgBot(token);
-        setToken("");
+        const response = await createTgBot(token.token, token.greeting);
+        setToken({ token: "", greeting: "" });
         setBotData(response);
         setModalOk(true);
       } catch (e: any) {
@@ -55,13 +58,22 @@ export const Telegram = () => {
         <input
           className={cl.bot_credentials}
           placeholder="Bot token"
-          onChange={(e) => setToken(e.target.value)}
-          value={token}
+          onChange={(e) =>
+            setToken((state) => {
+              return { ...state, token: e.target.value };
+            })
+          }
+          value={token.token}
           ref={tokenRef}
         />
         <input
           className={cl.bot_credentials}
           placeholder="Greeting (optional)"
+          onChange={(e) =>
+            setToken((state) => {
+              return { ...state, greeting: e.target.value };
+            })
+          }
         />
         <button className={cl.submit_btn}>Connect</button>
         {error && <p style={{ color: "red" }}>{error}</p>}
