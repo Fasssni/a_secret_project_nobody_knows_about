@@ -406,8 +406,17 @@ button {
   margin-top: 0.7rem;
 }
 
+.signup_error_component {
+  position: absolute;
+  top: 20vh;
+}
+
 @media all and (max-width: 1000px) {
   .wsfailed_main {
     font-size: 0.7rem;
+  }
+
+  .signup_error_component {
+    top: 15vh;
   }
 }

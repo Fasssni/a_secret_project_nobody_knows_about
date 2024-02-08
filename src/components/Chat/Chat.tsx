@@ -64,7 +64,7 @@ export const Chat = ({ convInfo }: ChatType) => {
                 {chat?.map((message, index) => (
                   <MessageContainer
                     message={message}
-                    name={user?.name}
+                    id={user?.id}
                     key={index}
                   />
                 ))}

@@ -1,76 +1,81 @@
-import { useEffect, useState } from "react"
-import { MessageProps } from "../../store/api"
-import cl from "./MessageContainer.module.css"
+import { useEffect, useState } from "react";
+import { MessageProps } from "../../store/api";
+import cl from "./MessageContainer.module.css";
 
-type MessageType={ 
-    message:MessageProps, 
-    name?: string
-}
+type MessageType = {
+  message: MessageProps;
+  id?: number;
+};
 
+export const MessageContainer = ({ message, id }: MessageType) => {
+  const [isUser, setIsUser] = useState<boolean>();
 
-export const MessageContainer=({message,name}:MessageType)=>{ 
-    const [isUser, setIsUser]=useState<boolean>()
+  const [date, setDate] = useState<any>();
+  const [time, setTime] = useState<any>();
 
-    const [date, setDate] = useState<any>();
-    const [time, setTime] = useState<any>();
-  
-    useEffect(() => {
-      
-      const dateTime = new Date(message.createdAt);
+  useEffect(() => {
+    const dateTime = new Date(message.createdAt);
 
-      const options:Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' }
-      const formattedDate = dateTime.toLocaleDateString(undefined, options)
+    const options: Intl.DateTimeFormatOptions = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+    const formattedDate = dateTime.toLocaleDateString(undefined, options);
 
-      const timeOptions: Intl.DateTimeFormatOptions= { hour: '2-digit', minute: '2-digit', hour12: true };
-      const formattedTime = dateTime.toLocaleTimeString(undefined, timeOptions);
-  
-      
-      setDate(formattedDate);
-      setTime(formattedTime);
-    }, []);
-    console.log(date,typeof time)
-    useEffect(()=>{ 
-         setIsUser(()=>name===message?.name)
-    },[])
-    return <div className={cl.message_main}
-                style={{
-                    justifyContent:isUser?"end":"start"
-                }}>
-                   {isUser
-                          ?
-                          <UserMessage {...message}
-                                        time={time} 
-                                        date={date}/>
-                          :
-                          <CustomerMessage {...message}
-                                            time={time} 
-                                            date={date}/>
-                          }
-           </div>
-}
+    const timeOptions: Intl.DateTimeFormatOptions = {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    };
+    const formattedTime = dateTime.toLocaleTimeString(undefined, timeOptions);
 
-type EndMessageProps={
-    time:string,
-    date:string,
+    setDate(formattedDate);
+    setTime(formattedTime);
+  }, []);
+  console.log(date, typeof time);
+  useEffect(() => {
+    setIsUser(() => id === message?.user_id);
+  }, []);
+  return (
+    <div
+      className={cl.message_main}
+      style={{
+        justifyContent: isUser ? "end" : "start",
+      }}
+    >
+      {isUser ? (
+        <UserMessage {...message} time={time} date={date} />
+      ) : (
+        <CustomerMessage {...message} time={time} date={date} />
+      )}
+    </div>
+  );
+};
 
-}&MessageProps
+type EndMessageProps = {
+  time: string;
+  date: string;
+} & MessageProps;
 
-const UserMessage=({text,time }:EndMessageProps)=>{ 
+const UserMessage = ({ text, time }: EndMessageProps) => {
+  return (
+    <div className={cl.message_container}>
+      <div className={cl.usermessage}>
+        <p className={cl.messagetext_user}>{text}</p>
+      </div>
+      <p className={cl.message_time_user}>{time}</p>
+    </div>
+  );
+};
 
-    return <div className={cl.message_container}>
-            <div className={cl.usermessage}>
-                <p className={cl.messagetext_user}>{text}</p>
-           </div>
-           <p className={cl.message_time_user}>{time}</p>
-          </div>
-}
-
-const CustomerMessage=({ text, time}:EndMessageProps)=>{ 
-   
-    return <div className={cl.message_container}>
-            <div className={cl.customermessage}>
-                    <p className={cl.messagetext_customer}>{text}</p>
-            </div>
-              <p className={cl.message_time_cus}>{time}</p>
-           </div> 
-}
+const CustomerMessage = ({ text, time }: EndMessageProps) => {
+  return (
+    <div className={cl.message_container}>
+      <div className={cl.customermessage}>
+        <p className={cl.messagetext_customer}>{text}</p>
+      </div>
+      <p className={cl.message_time_cus}>{time}</p>
+    </div>
+  );
+};
