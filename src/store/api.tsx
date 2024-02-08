@@ -275,9 +275,7 @@ export const StoreContextProvider = ({ children }: ChildreType) => {
 
   const handleUserChat = async (id: number) => {
     try {
-      const { data } = await axios.get(
-        `${msgURL}/getchat/${id}?user_id=${user?.id}`
-      );
+      const { data } = await axios.get(`${msgURL}/getchat/${id}`);
 
       setChat(data);
     } catch (err) {
