@@ -45,12 +45,14 @@ export const HomePage = () => {
             </span>
           </button>
           <div className={cl.image_container}>
-            <img src={image1} alt="" className={cl.image} />
+            <div className={cl.phone_demo}>
+              <img src={image1} alt="" className={cl.image} />
+            </div>
           </div>
         </div>
         <section className={cl.promo_section}>
           <div className={cl.promotion}>
-            <h3 className={cl.prom_desc}>Trusted by 5000+ teams</h3>
+            <h4 className={cl.prom_desc}>Trusted by 5000+ teams</h4>
             <CompanyBanner companies={teams} />
           </div>
           <ScrollReplaceTitles />
@@ -164,9 +166,9 @@ const CompanyBanner = ({ companies }: CompanyType) => {
     <div className={cl.banner} ref={bannerRef}>
       <div className={`${cl.companyList} ${scrolling ? cl.scrolling : ""}`}>
         {companies.map((company) => (
-          <h3 key={company.id} className={cl.companyItem}>
+          <h4 key={company.id} className={cl.companyItem}>
             {company.name}
-          </h3>
+          </h4>
         ))}
       </div>
     </div>

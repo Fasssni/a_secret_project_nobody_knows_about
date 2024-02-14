@@ -58,7 +58,7 @@ type EndMessageProps = {
   date: string;
 } & MessageProps;
 
-const UserMessage = ({ text, time }: EndMessageProps) => {
+export const UserMessage = ({ text, time }: EndMessageProps) => {
   return (
     <div className={cl.message_container}>
       <div className={cl.usermessage}>
