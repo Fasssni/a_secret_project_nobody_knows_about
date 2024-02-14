@@ -130,7 +130,6 @@ export const StoreContextProvider = ({ children }: ChildreType) => {
 
   const checkAuth = async () => {
     try {
-      setIsLoading(true);
       const response = await axios.get(`${path}/checkauth`, {
         withCredentials: true,
       });
@@ -142,11 +141,8 @@ export const StoreContextProvider = ({ children }: ChildreType) => {
     } catch (e: any) {
       console.log(e);
       if (e.response.status === 401) {
-        setIsAuth(false);
         console.log(e);
       }
-    } finally {
-      setIsLoading(false);
     }
   };
 
