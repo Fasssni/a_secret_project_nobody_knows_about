@@ -57,6 +57,17 @@ export type SocketResponseType = {
   close: () => void;
 };
 
+export type TemplatesType = {
+  id: number;
+  bot_id: number;
+  name: string;
+  text: string;
+  triggersTo: string;
+  createdAt: string;
+  updatedAt: string;
+  bot_name?: string;
+};
+
 type StoreContextProps = {
   login: ({ email, password }: LogingProps) => string | Promise<void>;
   signup: ({ user }: UserType) => Promise<string>;
@@ -78,6 +89,8 @@ type StoreContextProps = {
 
   getChannels: () => Promise<any> | undefined;
   removeChannel: (id: number) => Promise<any> | undefined;
+
+  getTemplates: (id: number) => Promise<TemplatesType[]>;
 
   isWsConnected: boolean;
 };
@@ -337,6 +350,16 @@ export const StoreContextProvider = ({ children }: ChildreType) => {
     }
   };
 
+  const getTemplates = async (bot_id: number) => {
+    try {
+      const { data } = await axios.get(`${msgURL}/gettemplates/${bot_id}`);
+
+      return data;
+    } catch (err) {
+      throw err;
+    }
+  };
+
   return (
     <StoreContext.Provider
       value={{
@@ -360,6 +383,8 @@ export const StoreContextProvider = ({ children }: ChildreType) => {
 
         getChannels,
         removeChannel,
+
+        getTemplates,
 
         isWsConnected,
       }}

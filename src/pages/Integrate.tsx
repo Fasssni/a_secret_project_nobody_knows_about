@@ -1,22 +1,18 @@
-
-import styles from "../pageModules/Integrate.module.css"
+import styles from "../pageModules/Integrate.module.css";
 import { useNavigate } from "react-router-dom";
 import { ChannelsPage } from "../components/ChannelsPage/ChannelsPage";
 import { ConnectedChannels } from "../components/ConnectedChannels/ConnectedChannels";
 
-export const Integrate=()=>{
-    
+export const Integrate = () => {
+  const navigate = useNavigate();
 
-    const navigate=useNavigate()
-  
-    const onClickHandler=(link:string)=>{ 
-        navigate(`${link}`)
-    }
+  const onClickHandler = (link: string) => {
+    navigate(`${link}`);
+  };
 
-    return <div className={styles.integrate_main}>
-             <ConnectedChannels/>
-             <ChannelsPage onClickHandler={onClickHandler} />
-           </div>;
-        };
-        
-    
+  return (
+    <div className={styles.integrate_main}>
+      <ChannelsPage onClickHandler={onClickHandler} />
+    </div>
+  );
+};

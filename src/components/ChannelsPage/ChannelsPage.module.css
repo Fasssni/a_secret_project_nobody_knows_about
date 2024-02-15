@@ -2,6 +2,7 @@
   position: relative;
   min-height: 110vh;
   width: 90%;
+  margin-top: 1rem;
   margin-left: 2rem;
   margin-right: 2rem;
   display: flex;

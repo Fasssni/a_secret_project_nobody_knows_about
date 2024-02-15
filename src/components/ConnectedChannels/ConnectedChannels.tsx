@@ -2,10 +2,17 @@ import { connectedChannelsType, useStoreContext } from "../../store/api";
 import cl from "./ConnectChannels.module.css";
 import { useState, useEffect } from "react";
 import { ArrowSvg } from "../../utils/svg";
+import { Arrow } from "./Arrow";
 
-export const ConnectedChannels = () => {
-  const { getChannels } = useStoreContext();
-  const [channels, setChannels] = useState<connectedChannelsType[]>();
+type ConnectedChannelsProps = {
+  channels?: connectedChannelsType[];
+  removeChannelState: (id: number) => void;
+};
+
+export const ConnectedChannels = ({
+  channels,
+  removeChannelState,
+}: ConnectedChannelsProps) => {
   const [modal, setModal] = useState<boolean>(false);
   const [channelModal, setChannelModal] = useState<boolean>(false);
   const [clickedChannel, setClickedChannel] = useState<connectedChannelsType>();
@@ -19,59 +26,37 @@ export const ConnectedChannels = () => {
     setClickedChannel(item);
   };
 
-  const removeChannelState = (id: number) => {
-    setChannels((prevChannels) =>
-      prevChannels?.filter((channel) => channel.id !== id)
-    );
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await getChannels();
-      setChannels(res);
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    console.log(channels);
-  }, [channels]);
-
   return (
-    channels && (
-      <div className={cl.con_channels_main}>
-        <div className={cl.con_channels_top}>
-          <h3>Connected channels</h3>
-          <p>({channels?.length})</p>
-          <div className={cl.arrow} onClick={() => setModal(!modal)}>
-            <ArrowSvg />
-          </div>
-        </div>
-
-        {modal && (
-          <div className={cl.channel_list}>
-            {channels?.map((item) => {
-              return (
-                <p
-                  className={cl.channel}
-                  key={item.id}
-                  onClick={() => handleModalOpen(item)}
-                >
-                  {item.name}
-                </p>
-              );
-            })}
-          </div>
-        )}
-        {channelModal && (
-          <ChannelDetails
-            handleModalClose={handleModalClose}
-            removeChannelState={removeChannelState}
-            {...clickedChannel}
-          />
-        )}
+    <div className={cl.con_channels_main}>
+      <div className={cl.con_channels_top}>
+        <h3>Connected channels</h3>
+        <p>({channels?.length})</p>
+        <Arrow modal={modal} handleClick={() => setModal(!modal)} />
       </div>
-    )
+
+      {modal && (
+        <div className={cl.channel_list}>
+          {channels?.map((item) => {
+            return (
+              <p
+                className={cl.channel}
+                key={item.id}
+                onClick={() => handleModalOpen(item)}
+              >
+                {item.name}
+              </p>
+            );
+          })}
+        </div>
+      )}
+      {channelModal && (
+        <ChannelDetails
+          handleModalClose={handleModalClose}
+          removeChannelState={removeChannelState}
+          {...clickedChannel}
+        />
+      )}
+    </div>
   );
 };
 

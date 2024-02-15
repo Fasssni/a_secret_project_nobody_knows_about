@@ -11,6 +11,7 @@ import { useUIContext } from "./store/uiContext";
 import { Inbox } from "./pages/Inbox";
 import { Integrate } from "./pages/Integrate";
 import { IntegrationDetailPage } from "./pages/IntegrationDetailPage";
+import { Automate } from "./pages/Automate";
 
 function App() {
   const { checkAuth, isAuth, isLoading } = useStoreContext();
@@ -43,6 +44,7 @@ function App() {
               <Route path="/inbox/" element={<Inbox />} />
               <Route path="/inbox/:conv_id" element={<Inbox />} />
               <Route path="/integrate/" element={<Integrate />} />
+              <Route path="/automate/" element={<Automate />} />
               <Route
                 path="/integrate/:integration"
                 element={<IntegrationDetailPage />}
