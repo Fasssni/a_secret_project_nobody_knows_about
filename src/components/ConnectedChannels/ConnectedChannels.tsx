@@ -1,7 +1,6 @@
 import { connectedChannelsType, useStoreContext } from "../../store/api";
 import cl from "./ConnectChannels.module.css";
-import { useState, useEffect } from "react";
-import { ArrowSvg } from "../../utils/svg";
+import { useState } from "react";
 import { Arrow } from "./Arrow";
 
 type ConnectedChannelsProps = {
