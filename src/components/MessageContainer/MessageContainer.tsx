@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { MessageProps } from "../../store/api";
 import cl from "./MessageContainer.module.css";
 

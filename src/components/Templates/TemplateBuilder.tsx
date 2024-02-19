@@ -8,7 +8,7 @@ type BuilderProps = {
 };
 
 export const TemplateBuilder = ({ builderOnClose, channels }: BuilderProps) => {
-  const [data, setData] = useState<TemplateBodyType>({
+  const [] = useState<TemplateBodyType>({
     bot_id: 0,
     name: "",
     triggersTo: "",
