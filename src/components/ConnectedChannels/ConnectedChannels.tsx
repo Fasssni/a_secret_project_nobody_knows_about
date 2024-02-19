@@ -2,6 +2,8 @@ import { connectedChannelsType, useStoreContext } from "../../store/api";
 import cl from "./ConnectChannels.module.css";
 import { useState } from "react";
 import { Arrow } from "./Arrow";
+import { Adder } from "../UI/Adder";
+import { useNavigate } from "react-router-dom";
 
 type ConnectedChannelsProps = {
   channels?: connectedChannelsType[];
@@ -16,6 +18,8 @@ export const ConnectedChannels = ({
   const [channelModal, setChannelModal] = useState<boolean>(false);
   const [clickedChannel, setClickedChannel] = useState<connectedChannelsType>();
 
+  const navigate = useNavigate();
+
   const handleModalClose = () => {
     setChannelModal(() => false);
   };
@@ -27,10 +31,13 @@ export const ConnectedChannels = ({
 
   return (
     <div className={cl.con_channels_main}>
-      <div className={cl.con_channels_top}>
-        <h3>Connected channels</h3>
-        <p>({channels?.length})</p>
-        <Arrow modal={modal} handleClick={() => setModal(!modal)} />
+      <div className={cl.con_channels_wrapper}>
+        <div className={cl.con_channels_top}>
+          <h3>Connected channels</h3>
+          <p>({channels?.length})</p>
+          <Arrow modal={modal} handleClick={() => setModal(!modal)} />
+        </div>
+        <Adder onClick={() => navigate("/integrate")}>Add a channel</Adder>
       </div>
 
       {modal && (

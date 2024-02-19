@@ -12,6 +12,10 @@
   flex-direction: column;
 }
 
+.con_channels_wrapper {
+  display: flex;
+  justify-content: space-between;
+}
 .con_channels_top {
   display: flex;
   align-items: center;

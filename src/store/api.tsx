@@ -68,6 +68,13 @@ export type TemplatesType = {
   bot_name?: string;
 };
 
+export type TemplateBodyType = {
+  bot_id: number;
+  name: string;
+  triggersTo: string;
+  text: string;
+};
+
 type StoreContextProps = {
   login: ({ email, password }: LogingProps) => string | Promise<void>;
   signup: ({ user }: UserType) => Promise<string>;
@@ -91,6 +98,7 @@ type StoreContextProps = {
   removeChannel: (id: number) => Promise<any> | undefined;
 
   getTemplates: (id: number) => Promise<TemplatesType[]>;
+  addTemplate: (data: TemplateBodyType) => void;
 
   isWsConnected: boolean;
 };
@@ -360,6 +368,14 @@ export const StoreContextProvider = ({ children }: ChildreType) => {
     }
   };
 
+  const addTemplate = async (data: TemplateBodyType) => {
+    try {
+      await axios.post(`${msgURL}/addtemplate`, data);
+    } catch (err) {
+      throw err;
+    }
+  };
+
   return (
     <StoreContext.Provider
       value={{
@@ -385,6 +401,7 @@ export const StoreContextProvider = ({ children }: ChildreType) => {
         removeChannel,
 
         getTemplates,
+        addTemplate,
 
         isWsConnected,
       }}

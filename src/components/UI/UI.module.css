@@ -1,0 +1,7 @@
+.adder_main {
+  padding: 5px 15px;
+  background-color: var(--Primary-100, #5570f1);
+  color: white;
+  border: none;
+  border-radius: 8px;
+}

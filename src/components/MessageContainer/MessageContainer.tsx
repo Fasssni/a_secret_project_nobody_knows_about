@@ -8,35 +8,24 @@ type MessageType = {
 };
 
 export const MessageContainer = ({ message, id }: MessageType) => {
-  const [isUser, setIsUser] = useState<boolean>();
+  const isUser = id === message.user_id;
 
-  const [date, setDate] = useState<any>();
-  const [time, setTime] = useState<any>();
+  const dateTime = new Date(message.createdAt);
 
-  useEffect(() => {
-    const dateTime = new Date(message.createdAt);
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  const formattedDate = dateTime.toLocaleDateString(undefined, options);
 
-    const options: Intl.DateTimeFormatOptions = {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    };
-    const formattedDate = dateTime.toLocaleDateString(undefined, options);
+  const timeOptions: Intl.DateTimeFormatOptions = {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  };
+  const formattedTime = dateTime.toLocaleTimeString(undefined, timeOptions);
 
-    const timeOptions: Intl.DateTimeFormatOptions = {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true,
-    };
-    const formattedTime = dateTime.toLocaleTimeString(undefined, timeOptions);
-
-    setDate(formattedDate);
-    setTime(formattedTime);
-  }, []);
-  console.log(date, typeof time);
-  useEffect(() => {
-    setIsUser(() => id === message?.user_id);
-  }, []);
   return (
     <div
       className={cl.message_main}
@@ -45,9 +34,13 @@ export const MessageContainer = ({ message, id }: MessageType) => {
       }}
     >
       {isUser ? (
-        <UserMessage {...message} time={time} date={date} />
+        <UserMessage {...message} time={formattedTime} date={formattedDate} />
       ) : (
-        <CustomerMessage {...message} time={time} date={date} />
+        <CustomerMessage
+          {...message}
+          time={formattedTime}
+          date={formattedDate}
+        />
       )}
     </div>
   );
