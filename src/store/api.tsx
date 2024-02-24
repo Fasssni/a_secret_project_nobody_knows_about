@@ -164,6 +164,7 @@ export const StoreContextProvider = ({ children }: ChildreType) => {
       console.log(e);
       if (e.response.status === 401) {
         console.log(e);
+        setIsAuth(false);
       }
     } finally {
       setIsLoading(false);
